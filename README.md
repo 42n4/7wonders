@@ -1,4 +1,4 @@
 7wonders
 ========
 
-A computer game based on the tabletop game 7 Wonders
+A computer game based on the table top game 7 Wonders
