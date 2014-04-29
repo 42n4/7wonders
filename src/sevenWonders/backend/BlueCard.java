@@ -6,8 +6,8 @@ public class BlueCard extends Card implements VictoryPoints {
     private int victoryPoints;
     
     public BlueCard(int id, String name, String description, int[] preCards,
-	    int[] postCards, EnumMap<Resource, Integer> cost, int victoryPoints) {
-	super(id, name, description, preCards, postCards, cost);
+	    int[] postCards, EnumMap<Resource, Integer> cost, int moneyCost, int victoryPoints) {
+	super(id, name, description, preCards, postCards, cost, moneyCost);
 	this.victoryPoints = victoryPoints;
     }
     

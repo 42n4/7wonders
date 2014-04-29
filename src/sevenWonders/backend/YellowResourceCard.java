@@ -3,17 +3,17 @@ package sevenWonders.backend;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class GrayCard extends Card implements ResourceCard {
+public class YellowResourceCard extends YellowCard implements ResourceCard {
+
     private Map<Resource, Integer> resources = new EnumMap<Resource, Integer>(
 	    Resource.class);
 
-    public GrayCard(int id, String name, String description, int[] preCards,
-	    int[] postCards, EnumMap<Resource, Integer> cost, int moneyCost,
-	    Resource[] resources, int amount) {
+    public YellowResourceCard(int id, String name, String description,
+	    int[] preCards, int[] postCards, EnumMap<Resource, Integer> cost, int moneyCost, Resource[] resources) {
 	super(id, name, description, preCards, postCards, cost, moneyCost);
 
 	for (Resource r : resources) {
-	    this.resources.put(r, amount);
+	    this.resources.put(r, 1);
 	}
     }
 
@@ -24,6 +24,7 @@ public class GrayCard extends Card implements ResourceCard {
 
     @Override
     public boolean isSellable() {
-	return true;
+	return false;
     }
+    
 }

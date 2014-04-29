@@ -2,12 +2,11 @@ package sevenWonders.backend;
 
 import java.util.EnumMap;
 
-public abstract class YellowCard extends Card{
+public abstract class PurpleCard extends Card {
 
-    protected YellowCard(int id, String name, String description, int[] preCards,
+    public PurpleCard(int id, String name, String description, int[] preCards,
 	    int[] postCards, EnumMap<Resource, Integer> cost, int moneyCost) {
 	super(id, name, description, preCards, postCards, cost, moneyCost);
-	
     }
-    
+
 }

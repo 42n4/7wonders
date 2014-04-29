@@ -7,7 +7,8 @@ public class Player {
     public final Wonder wonder;
     private List<Card> buildings = new ArrayList<>();
     private int money; // TODO
-    private int militaryTokens = 0; // TODO: left/right?
+    private int militaryWins = 0; // TODO: left/right?
+    private int militaryLosses = 0;
     public final String name;
     
     /**
@@ -42,8 +43,12 @@ public class Player {
 	money -= m;
     }
     
-    public int getMilitaryTokens() {
-	return militaryTokens;
+    public int getMilitaryWins() {
+	return militaryWins;
+    }
+    
+    public int getMilitaryLosses() {
+	return militaryLosses;
     }
     
     /**
