@@ -1,4 +1,4 @@
-package backend;
+package sevenWonders.backend;
 
 import java.util.ArrayList;
 import java.util.List;
