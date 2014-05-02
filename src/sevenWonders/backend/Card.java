@@ -28,4 +28,9 @@ public abstract class Card {
 	this.cost = cost;
 	this.moneyCost = moneyCost;
     }
+    
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
