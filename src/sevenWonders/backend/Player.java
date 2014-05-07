@@ -62,4 +62,11 @@ public class Player {
     void buildCard(Card building) {
 	buildings.add(building);
     }
+    
+    /**
+     * Returns a list of the cards the player has played
+     */
+    public List<Card> getBuildings() {
+	return new ArrayList<Card>(buildings);
+    }
 }

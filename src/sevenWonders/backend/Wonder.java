@@ -7,7 +7,7 @@ public class Wonder {
     public final Map<Resource, Integer>[] cost;
     public final Resource produce;
     public final Stage[] stages;
-    private int currentLevel = -1;
+    private int currentLevel = -1; 
     
     /**
      * Creates a new wonder with the passed attributes.
@@ -31,23 +31,28 @@ public class Wonder {
      * Does not have a access modifier because it should only 
      * be accessible from this package.
      */
-    void build() {
+    void build(int currentEra) {
 	if (getCurrentLevel() >= cost.length) 
 	    throw new IllegalArgumentException("Trying to build a finished wonder");
 	currentLevel++;
+	stages[currentLevel].eraBuilt = currentEra;
 	// TODO: return some action thingy
     }
     
-    public abstract class Stage {
+    public static abstract class Stage {
 	public final StageType type;
+	private int eraBuilt = 0;
 
 	public Stage(StageType type) {
 	    this.type = type;
 	}
 	
+	public int built() {
+	    return eraBuilt;
+	}
     }
     
-    public enum StageType{
+    public static enum StageType{
 	NORMAL, RESURRECT, LASTCARD, FREEBUILD, COPYGUILD
     }
 }
