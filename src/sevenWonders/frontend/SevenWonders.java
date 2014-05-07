@@ -8,6 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
+/**
+ * Testclass to try out WondersHandController and WondersHand.fxml.
+ * 
+ * @author Jenny Norelius
+ */
+
 public class SevenWonders extends Application {
     public static void main(String[] args) {
 	Application.launch(SevenWonders.class, (java.lang.String[])null);

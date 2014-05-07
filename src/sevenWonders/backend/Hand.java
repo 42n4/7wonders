@@ -31,33 +31,26 @@ public class Hand {
 	public final int leftCost;
 	public final int selfCost;
 	public final int rightCost;
-	Map<Resource, Integer> leftResources;
-	Map<Resource, Integer> rightResource;
+	public Map<Resource, Integer> leftResources;
+	public Map<Resource, Integer> rightResources;
 	public final boolean free;
 
 	public PaymentOption(int leftCost, int selfCost, int rightCost,
 		Map<Resource, Integer> leftResources,
-		Map<Resource, Integer> rightResource, boolean free) {
+		Map<Resource, Integer> rightResources, boolean free) {
 	    this.leftCost = leftCost;
 	    this.selfCost = selfCost;
 	    this.rightCost = rightCost;
 	    this.leftResources = leftResources;
-	    this.rightResource = rightResource;
+	    this.rightResources = rightResources;
 	    this.free = free;
 	}
 
 	public PaymentOption(int leftCost, int selfCost, int rightCost,
 		Map<Resource, Integer> leftResources,
-		Map<Resource, Integer> rightResource) {
-	    this(leftCost, selfCost, rightCost, leftResources, rightResource,
+		Map<Resource, Integer> rightResources) {
+	    this(leftCost, selfCost, rightCost, leftResources, rightResources,
 		    false);
-	}
-	
-	@Override
-	public String toString() {
-	    int total = leftCost + selfCost + rightCost;
-	    String s = "Total cost: " + total + "g";
-	    return s;
 	}
     }
 }

@@ -1,38 +1,25 @@
 package sevenWonders.frontend;
 
+import javafx.scene.control.TextField;
+
+import javafx.scene.control.ListCell;
+import javafx.util.Callback;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.util.StringConverter;
+import sevenWonders.backend.Action.ActionType;
+import sevenWonders.backend.Action;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
-
-import javafx.beans.binding.IntegerExpression;
-
-import javafx.collections.ObservableList;
-
-import javafx.scene.control.Label;
-
-import javafx.collections.FXCollections;
-
-import javafx.scene.input.PickResult;
-
-import javafx.scene.input.ContextMenuEvent;
-
 import javafx.event.EventHandler;
-
-import sevenWonders.backend.Deck;
-
 import sevenWonders.backend.Card;
 import sevenWonders.backend.Hand.PaymentOption;
-
 import sevenWonders.backend.Hand;
-
-import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javafx.fxml.Initializable;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
@@ -43,13 +30,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ChoiceBox;
 
+/**
+ * Together with WondersHanf.fxml describes and processes the logic for the
+ * displaypane for the hand you receive each turn in Seven Wonders. The
+ * doneButton will onAction return the action choice of the player.
+ * 
+ * @author Jenny Norelius & Andreas Jönsson
+ */
 public class WondersHandController implements Initializable {
-    // testhand
     private final String BUILD = "Build";
     private final String WONDER = "Wonder";
     private final String SELL = "Sell";
-
-    Card selectedCard;
+    private Action action; // the currently selected action
 
     @FXML
     private ImageView cardImage1;
@@ -66,15 +58,15 @@ public class WondersHandController implements Initializable {
     @FXML
     private ImageView cardImage7;
     @FXML
-    private ChoiceBox cardBox;
+    private ChoiceBox<Card> cardBox;
     @FXML
-    private ChoiceBox<String> actionBox;
+    private ChoiceBox<String> actionBox; // build, wonder or sell
     @FXML
-    private ChoiceBox buildBox;
+    private ChoiceBox<PaymentOption> buildBox;
     @FXML
-    private Label pickedCard;
+    private ListView paymentList; // listview of available paymentoptions
     @FXML
-    private Button doneButton;
+    private Button doneButton; // returns the selected action
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -85,65 +77,134 @@ public class WondersHandController implements Initializable {
 		cardImage2, cardImage3, cardImage4, cardImage5, cardImage6,
 		cardImage7 });
 
+	// Fetch and store some data from hand
 	Set<Card> handCardSet = hand.cards.keySet();
-
 	Card[] cardArray = handCardSet.toArray(new Card[handCardSet.size()]);
 	String[] handCardNames = new String[cardArray.length];
-	for (int j = 0; j < handCardNames.length; j++) {
+
+	// Fills the image views and the card choice box.
+	for (int i = 0; i < handCardNames.length; i++) {
 	    Image img = new Image("file:"
-		    + getClass().getResource("/" + cardArray[j].description)
+		    + getClass().getResource("/" + cardArray[i].description)
 			    .getPath());
-	    ImageView cardView = views.get(j);
+	    ImageView cardView = views.get(i);
 	    cardView.setImage(img);
-	    cardBox.getItems().add(cardArray[j]);
+	    cardBox.getItems().add(cardArray[i]);
 	}
 
+	// Sets custom cell for paymentList.
+	setPaymentCellFactory();
+	// Sets a String converter for the payment option buildBox.
+	setPaymentBoxConverter();
+
+	// Sets tooltips.
 	cardBox.setTooltip(new Tooltip("Select card to use."));
-	actionBox.getItems().addAll(BUILD, WONDER, SELL);
 	actionBox.setTooltip(new Tooltip(
 		"Select action to perform with your card."));
 	buildBox.setTooltip(new Tooltip("Select payment option."));
+	paymentList.setTooltip(new Tooltip(
+		"Available payment options for your card."));
 	doneButton
 		.setTooltip(new Tooltip("Press when you've made you choice."));
 
+	// Set all listeners and handlers.
+	actionBox.getItems().addAll(BUILD, WONDER, SELL);
 	setCardBoxListener(hand.cards, hand.wonderPaymentOptions, cardArray);
 	setActionBoxListener(hand.cards, hand.wonderPaymentOptions);
-
-	// int i = 0;
-	// for (Card card : handCardSet) {
-	// Image img = new Image("file:"
-	// + getClass().getResource("/" + card.description).getPath());
-	// ImageView cardView = views.get(i++);
-	// cardView.setImage(img);
-	// cardBox.getItems().add(card);
-	// }
-
-
-
-	// cardBox.getSelectionModel().selectedIndexProperty()
-	// .addListener(new ChangeListener<Number>() {
-	// public void changed(ObservableValue ov, Number value,
-	// Number new_value) {
-	// List<PaymentOption> options = hand.cards
-	// .get(handCardArray[new_value.intValue()]);
-	// for (int j = 0; j < options.size(); j++) {
-	// buildBox.getItems().add(
-	// options.get(j).leftCost
-	// + options.get(j).rightCost
-	// + options.get(j).selfCost);
-	// }
-	// buildBox = new
-	// ChoiceBox(FXCollections.observableArrayList();
-	// label.setText(texts[new_Value.intValue()]);
-	// }
-	// });
-
+	doneButton.setOnAction(new EventHandler<ActionEvent>() {
+	    @Override
+	    public void handle(ActionEvent arg0) {
+		if (actionBox.getValue().equals(SELL)
+			|| buildBox.getValue() != null) {
+		    // TODO send action
+		}
+	    }
+	});
     }
 
     /**
-     * @param items
-     * @param cards
+     * Sets a custom StringConverter of PaymentOption for the choicebox buildBox.
+     */
+    private void setPaymentBoxConverter() {
+	buildBox.setConverter(new StringConverter<PaymentOption>() {
+
+	    @Override
+	    public PaymentOption fromString(String o) {
+		return null;
+	    }
+
+	    @Override
+	    public String toString(PaymentOption o) {
+		if (o.free) {
+		    return "Free build";
+		}
+		int total = o.leftCost + o.selfCost + o.rightCost;
+		if (total == 0) {
+		    return "No cost";
+		}
+		return total + "g";
+	    }
+	});
+    }
+
+    /**
+     * Sets a custom cell with a custom StringConverter of PaymentOptions for the 
+     * listView paymentList.
+     */
+    private void setPaymentCellFactory() {
+	paymentList
+		.setCellFactory(new Callback<ListView<PaymentOption>, javafx.scene.control.cell.TextFieldListCell<PaymentOption>>() {
+
+		    @Override
+		    public TextFieldListCell<PaymentOption> call(
+			    ListView<PaymentOption> arg0) {
+			TextFieldListCell<PaymentOption> cell = new TextFieldListCell<PaymentOption>();
+			cell.setConverter(new StringConverter<PaymentOption>() {
+
+			    @Override
+			    public PaymentOption fromString(String arg0) {
+				return null;
+			    }
+
+			    @Override
+			    public String toString(PaymentOption o) {
+				if (o.free) {
+				    return "Free build!";
+				}
+				int total = o.leftCost + o.selfCost
+					+ o.rightCost;
+				if (total == 0) {
+				    return "No cost for building.";
+				}
+				String s = total + "g:";
+				if (o.selfCost > 0) {
+				    s = s + " " + o.selfCost + "g self cost.";
+				}
+				if (o.leftCost > 0) {
+				    s = s + " " + o.leftCost
+					    + "g to left neighbour for "
+					    + o.leftResources.keySet() + ".";
+				}
+				if (o.rightCost > 0) {
+				    s = s + " " + o.rightCost
+					    + "g to right neighbour for "
+					    + o.rightResources.keySet() + ".";
+				}
+				return s;
+			    }
+			});
+			return cell;
+		    }
+		});
+    }
+
+    /**
+     * Adds a listener to the cardBox that changes the items in buildBox and
+     * paymentList.
+     * 
+     * @param buildingOptionsMap
      * @param wonderPaymentOptions
+     * @param arrayOfCards
      */
     private void setCardBoxListener(
 	    HashMap<Card, List<PaymentOption>> buildingOptionsMap,
@@ -151,6 +212,7 @@ public class WondersHandController implements Initializable {
 	final HashMap<Card, List<PaymentOption>> buildOptions = buildingOptionsMap;
 	final List<PaymentOption> wonderOptions = wonderPaymentOptions;
 	final Card[] cardArray = arrayOfCards;
+
 	cardBox.getSelectionModel().selectedIndexProperty()
 		.addListener(new ChangeListener() {
 		    @Override
@@ -162,14 +224,25 @@ public class WondersHandController implements Initializable {
 			    List<PaymentOption> list = buildOptions
 				    .get(cardArray[index]);
 			    buildBox.getItems().setAll(list);
+			    paymentList.getItems().setAll(list);
 			} else if (actionBox.getValue().equals(WONDER)) {
 			    buildBox.setValue(null);
 			    buildBox.getItems().setAll(wonderOptions);
+			    paymentList.getItems().setAll(wonderOptions);
+			} else if (actionBox.getValue().equals(SELL)) {
+			    paymentList.getItems().setAll("Sell for 3g.");
 			}
 		    }
 		});
     }
 
+    /**
+     * Adds a listener to the actionBox that changes the items in buildBox and
+     * paymentList.
+     * 
+     * @param buildingOptionsMap
+     * @param wonderPaymentOptions
+     */
     private void setActionBoxListener(
 	    HashMap<Card, List<PaymentOption>> buildingOptionsMap,
 	    List<PaymentOption> wonderPaymentOptions) {
@@ -182,25 +255,68 @@ public class WondersHandController implements Initializable {
 			    Object newSelected) {
 			int index = Integer.parseInt(newSelected.toString());
 			buildBox.setValue(null);
-			if (index == 0) { // BUILD
-			    List<PaymentOption> list = buildOptions.get(cardBox
-				    .getValue());
-			    buildBox.getItems().setAll(list);
-			} else if (index == 1) { // WONDER
-			    buildBox.getItems().setAll(wonderOptions);
-			} else if (index == 2) { // SELL
-			    buildBox.getItems().clear();
+			if (cardBox.getValue() != null) {
+			    if (index == 0) { // BUILD
+				List<PaymentOption> list = buildOptions
+					.get(cardBox.getValue());
+				buildBox.getItems().setAll(list);
+				paymentList.getItems().setAll(list);
+			    } else if (index == 1) { // WONDER
+				buildBox.getItems().setAll(wonderOptions);
+				paymentList.getItems().setAll(wonderOptions);
+			    } else if (index == 2) { // SELL
+				buildBox.getItems().clear();
+				paymentList.getItems().clear();
+				paymentList.getItems().setAll("Sell for 3g.");
+				setAction(-1);
+			    }
 			}
 		    }
 		});
     }
 
-    private ChoiceBox paymentOptionMenu(List<PaymentOption> list) {
-	ChoiceBox cb = new ChoiceBox();
-	cardBox.getItems().addAll(list);
-	return cb;
+    /**
+     * When a payment option is selected the action choice saved in action is
+     * updated.
+     */
+    private void setPaymnetBoxListener() {
+	buildBox.getSelectionModel().selectedIndexProperty()
+		.addListener(new ChangeListener() {
+		    @Override
+		    public void changed(ObservableValue ov, Object oldSelected,
+			    Object newSelected) {
+			int index = Integer.parseInt(newSelected.toString());
+			if (!actionBox.getValue().isEmpty()
+				&& buildBox.getValue() != null) {
+			    setAction(index);
+			}
+		    }
+		});
     }
 
+    /**
+     * Sets action to be the one currently chosen.
+     * 
+     * @param paymentOptionIndex
+     */
+    private void setAction(int paymentOptionIndex) {
+	ActionType actionType = null;
+	int index = paymentOptionIndex;
+	if (actionBox.getValue().equals(BUILD)) {
+	    actionType = ActionType.BUILD_BUILDING;
+	} else if (actionBox.getValue().equals(WONDER)) {
+	    actionType = ActionType.BUILD_WONDER;
+	} else if (actionBox.getValue().equals(SELL)) {
+	    actionType = ActionType.DISCARD_CARD;
+	}
+	Action action = new Action(cardBox.getValue(), actionType,
+		paymentOptionIndex);
+	this.action = action;
+    }
+
+    /**
+     * Checks that injection worked.
+     */
     private void assertContainers() {
 	assert actionBox != null : "fx:id=\"actionBox\" was not injected: check your FXML file 'WondersHand.fxml'.";
 	assert buildBox != null : "fx:id=\"buildBox\" was not injected: check your FXML file 'WondersHand.fxml'.";
@@ -212,5 +328,7 @@ public class WondersHandController implements Initializable {
 	assert cardImage5 != null : "fx:id=\"cardImage5\" was not injected: check your FXML file 'WondersHand.fxml'.";
 	assert cardImage6 != null : "fx:id=\"cardImage6\" was not injected: check your FXML file 'WondersHand.fxml'.";
 	assert cardImage7 != null : "fx:id=\"cardImage7\" was not injected: check your FXML file 'WondersHand.fxml'.";
+	assert doneButton != null : "fx:id=\"doneButton\" was not injected: check your FXML file 'WondersHand.fxml'.";
+	assert paymentList != null : "fx:id=\"paymentList\" was not injected: check your FXML file 'WondersHand.fxml'.";
     }
 }

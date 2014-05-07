@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * Testclass to try out WondersHandController and WondersHand.fxml.
+ * REturns a dummy Hand.
  */
 public class GivfHand {
 
