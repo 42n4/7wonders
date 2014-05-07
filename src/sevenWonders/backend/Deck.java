@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Contains all the cards in the game.
  * 
+ * @author Jenny Norelius & Andreas Jönsson 
  */
 public class Deck {
 

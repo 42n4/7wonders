@@ -14,22 +14,22 @@ import javafx.application.Application;
  * @author Jenny Norelius
  */
 
-public class SevenWonders extends Application {
+public class SevenWondersHandTest extends Application {
     public static void main(String[] args) {
-	Application.launch(SevenWonders.class, (java.lang.String[])null);
+	Application.launch(SevenWondersHandTest.class, (java.lang.String[])null);
     }
 
     @Override
     public void start(Stage primaryStage) {
 	try {
-	    AnchorPane page = (AnchorPane) FXMLLoader.load(SevenWonders.class
+	    AnchorPane page = (AnchorPane) FXMLLoader.load(SevenWondersHandTest.class
 		    .getResource("WondersHand.fxml"));
 	    Scene scene = new Scene(page);
 	    primaryStage.setScene(scene);
 	    primaryStage.setTitle("Seven Wonders");
 	    primaryStage.show();
 	} catch (Exception ex) {
-	    Logger.getLogger(SevenWonders.class.getName()).log(Level.SEVERE,
+	    Logger.getLogger(SevenWondersHandTest.class.getName()).log(Level.SEVERE,
 		    null, ex);
 	}
     }

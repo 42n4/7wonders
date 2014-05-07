@@ -1,13 +1,10 @@
 package sevenWonders.frontend;
 
 import sevenWonders.backend.Resource;
-
 import sevenWonders.backend.Hand;
-
 import sevenWonders.backend.Card;
 import sevenWonders.backend.Deck;
 import sevenWonders.backend.Hand.PaymentOption;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -16,7 +13,7 @@ import java.util.Map;
 
 /**
  * Testclass to try out WondersHandController and WondersHand.fxml.
- * REturns a dummy Hand.
+ * Creates a dummy Hand.
  */
 public class GivfHand {
 
