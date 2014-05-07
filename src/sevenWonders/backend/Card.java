@@ -33,4 +33,9 @@ public abstract class Card {
     public int hashCode() {
         return id;
     }
+    
+    @Override
+    public String toString() {
+	return name;
+    }
 }

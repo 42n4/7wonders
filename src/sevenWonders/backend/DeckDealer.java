@@ -20,6 +20,7 @@ public class DeckDealer {
 
 	List<Card> deck = new LinkedList<Card>();
 	
+	deck = Deck.GetDeck(era, playerCount);
 	//TODO: create all the cards
 	
 	// Shuffles the deck and deals the cards in a traditional fashion 

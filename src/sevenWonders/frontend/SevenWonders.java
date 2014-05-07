@@ -11,7 +11,6 @@ import javafx.application.Application;
 public class SevenWonders extends Application {
     public static void main(String[] args) {
 	Application.launch(SevenWonders.class, (java.lang.String[])null);
-	//launch(args);
     }
 
     @Override
@@ -28,5 +27,6 @@ public class SevenWonders extends Application {
 		    null, ex);
 	}
     }
-
+    
+    
 }

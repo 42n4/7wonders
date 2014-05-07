@@ -13,53 +13,35 @@
   <children>
     <HBox prefHeight="150.0" prefWidth="600.0" spacing="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ImageView fx:id="imageView" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+        <ImageView id="imageView" fx:id="cardImage1" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
           <HBox.margin>
             <Insets bottom="5.0" top="5.0" fx:id="x1" />
           </HBox.margin>
         </ImageView>
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
-        <ImageView fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView id="cardImage" fx:id="cardImage2" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage3" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage4" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage5" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage6" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage7" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" HBox.margin="$x1" />
       </children>
     </HBox>
     <HBox id="HBox" alignment="CENTER" prefWidth="581.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="155.0">
       <children>
         <VBox id="VBox" alignment="CENTER" spacing="5.0">
           <children>
-            <ChoiceBox fx:id="cardBox">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ChoiceBox>
-            <ChoiceBox fx:id="actionBox">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ChoiceBox>
-            <ChoiceBox fx:id="buildBox">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ChoiceBox>
+            <Label fx:id="pickedCard" text="Card" />
+            <ChoiceBox fx:id="cardBox" />
+            <ChoiceBox fx:id="actionBox" />
+            <ChoiceBox fx:id="buildBox" />
           </children>
         </VBox>
-        <ListView prefHeight="140.0" prefWidth="252.0" HBox.hgrow="ALWAYS" />
+        <ListView prefHeight="140.0" prefWidth="469.0" HBox.hgrow="ALWAYS" />
+        <Button id="doneButoon" fx:id="doneButton" mnemonicParsing="false" text="Done" HBox.hgrow="NEVER">
+          <HBox.margin>
+            <Insets left="1.0" right="1.0" />
+          </HBox.margin>
+        </Button>
       </children>
     </HBox>
   </children>
