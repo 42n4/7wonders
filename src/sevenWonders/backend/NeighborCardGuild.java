@@ -5,7 +5,7 @@ import java.util.EnumMap;
 public class NeighborCardGuild extends PurpleCard implements VictoryPoints,
 	NeighborDependant {
     public final int victoryPointsReward;
-    public final Class<Card> cardType;
+    public final Class<? extends Card> cardType;
     private int updatedReward = 0;
 
     public NeighborCardGuild(int id, String name, String description,
@@ -16,6 +16,12 @@ public class NeighborCardGuild extends PurpleCard implements VictoryPoints,
 	this.cardType = cardType;
     }
 
+    NeighborCardGuild(NeighborCardGuildBuilder builder) {
+	super(builder);
+	this.cardType = builder.cardType;
+	this.victoryPointsReward = builder.victoryPointsReward;
+    }
+
     @Override
     public int getVictoryPoints() {
 	return updatedReward;
@@ -24,5 +30,25 @@ public class NeighborCardGuild extends PurpleCard implements VictoryPoints,
     @Override
     public void update(int count) {
 	updatedReward = count * victoryPointsReward;
+    }
+
+    static class NeighborCardGuildBuilder extends
+	    Builder<NeighborCardGuild, NeighborCardGuildBuilder> {
+	private Class<? extends Card> cardType;
+	private int victoryPointsReward;
+
+	NeighborCardGuildBuilder rewardCard(Class<? extends Card> cardType) {
+	    this.cardType = cardType;
+	    return this;
+	}
+
+	NeighborCardGuildBuilder pointsReward(int points) {
+	    this.victoryPointsReward = points;
+	    return this;
+	}
+
+	NeighborCardGuild build() {
+	    return new NeighborCardGuild(this);
+	}
     }
 }

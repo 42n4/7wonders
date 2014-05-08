@@ -16,6 +16,11 @@ public class YellowResourceCard extends YellowCard implements ResourceCard {
 	    this.resources.put(r, 1);
 	}
     }
+    
+    YellowResourceCard(YellowResourceCardBuilder builder){
+	super(builder);
+	this.resources = builder.resources;
+    }
 
     @Override
     public Map<Resource, Integer> getResources() {
@@ -27,4 +32,17 @@ public class YellowResourceCard extends YellowCard implements ResourceCard {
 	return false;
     }
     
+    static class YellowResourceCardBuilder extends Builder<YellowResourceCard, YellowResourceCardBuilder> {
+	private Map<Resource, Integer> resources = new EnumMap<Resource, Integer>(
+		    Resource.class);
+	
+	YellowResourceCardBuilder produce(Resource r, int nr) {
+	    resources.put(r, nr);
+	    return this;
+	}
+	
+	YellowResourceCard build() {
+	    return new YellowResourceCard(this);
+	}
+    }
 }

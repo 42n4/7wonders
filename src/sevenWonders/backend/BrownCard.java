@@ -1,5 +1,6 @@
 package sevenWonders.backend;
 
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -17,6 +18,11 @@ public class BrownCard extends Card implements ResourceCard {
 	}
     }
 
+    BrownCard(BrownCardBuilder builder) {
+	super(builder);
+	resources = builder.resources;
+    }
+
     @Override
     public Map<Resource, Integer> getResources() {
 	return resources;
@@ -25,5 +31,19 @@ public class BrownCard extends Card implements ResourceCard {
     @Override
     public boolean isSellable() {
 	return true;
+    }
+
+    static class BrownCardBuilder extends Builder<BrownCard, BrownCardBuilder> {
+	private Map<Resource, Integer> resources = new EnumMap<Resource, Integer>(
+		Resource.class);
+	
+	BrownCardBuilder produce(Resource r, int nr) {
+	    resources.put(r, nr);
+	    return this;
+	}
+	
+	BrownCard build() {
+	    return new BrownCard(this);
+	}
     }
 }

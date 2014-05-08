@@ -22,7 +22,7 @@ public class GivfHand {
 	HashMap<Card, List<PaymentOption>> cards = new HashMap<>();
 	List<PaymentOption> wonderPaymentOptions;
 	Deck deck = new Deck();
-	List<Card> rawCards = Deck.GetDeck(2, 3);
+	List<Card> rawCards = Deck.GetDeck(1, 3);
 
 	List<PaymentOption> list1 = new ArrayList<>();
 	List<PaymentOption> list2 = new ArrayList<>();

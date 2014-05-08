@@ -16,6 +16,11 @@ public class GrayCard extends Card implements ResourceCard {
 	    this.resources.put(r, amount);
 	}
     }
+    
+    GrayCard(GrayCardBuilder builder){
+	super(builder);
+	this.resources = builder.resources;
+    }
 
     @Override
     public Map<Resource, Integer> getResources() {
@@ -25,5 +30,19 @@ public class GrayCard extends Card implements ResourceCard {
     @Override
     public boolean isSellable() {
 	return true;
+    }
+    
+    static class GrayCardBuilder extends Builder<GrayCard, GrayCardBuilder> {
+	private Map<Resource, Integer> resources = new EnumMap<Resource, Integer>(
+		Resource.class);
+	
+	GrayCardBuilder produce(Resource r, int nr) {
+	    resources.put(r, nr);
+	    return this;
+	}
+	
+	GrayCard build() {
+	    return new GrayCard(this);
+	}
     }
 }

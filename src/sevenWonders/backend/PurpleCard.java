@@ -9,4 +9,7 @@ public abstract class PurpleCard extends Card {
 	super(id, name, description, preCards, postCards, cost, moneyCost);
     }
 
+    public PurpleCard(Builder<?, ?> builder) {
+	super(builder);
+    }
 }

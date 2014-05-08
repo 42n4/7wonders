@@ -10,9 +10,27 @@ public class GreenCard extends Card implements ScienceCard {
 	super(id, name, description, preCards, postCards, cost, moneyCost);
 	this.science = science;
     }
+    
+    GreenCard(GreenCardBuilder builder){
+	super(builder);
+	science = builder.scienceField;
+    }
 
     @Override
     public Science getScience() {
 	return science;
+    }
+    
+    static class GreenCardBuilder extends Builder<GreenCard, GreenCardBuilder> {
+	private Science scienceField;
+	
+	GreenCardBuilder science(Science s) {
+	    scienceField = s;
+	    return this;
+	}
+	
+	GreenCard build() {
+	    return new GreenCard(this);
+	}
     }
 }

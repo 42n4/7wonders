@@ -11,8 +11,26 @@ public class BlueCard extends Card implements VictoryPoints {
 	this.victoryPoints = victoryPoints;
     }
     
+    BlueCard(BlueCardBuilder builder){
+	super(builder);
+	
+    }
+    
     @Override
     public int getVictoryPoints() {
         return victoryPoints;
+    }
+    
+    static class BlueCardBuilder extends Builder<BlueCard, BlueCardBuilder> {
+	private int points;
+	
+	BlueCardBuilder points(int victoryPoints) {
+	    points = victoryPoints;
+	    return this;
+	}
+	
+	BlueCard build() {
+	    return new BlueCard(this);
+	}
     }
 }

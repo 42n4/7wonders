@@ -9,5 +9,9 @@ public abstract class YellowCard extends Card{
 	super(id, name, description, preCards, postCards, cost, moneyCost);
 	
     }
+
+    public YellowCard(Builder<?, ?> builder) {
+	super(builder);
+    }
     
 }

@@ -1,3 +1,4 @@
 package sevenWonders.backend;
 
-public interface ScienceChoice {}
+public interface ScienceChoice {
+}
