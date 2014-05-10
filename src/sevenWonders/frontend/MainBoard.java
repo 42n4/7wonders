@@ -56,6 +56,6 @@ public class MainBoard extends AnchorPane implements Initializable {
     
     public void parseHand(Hand h) {
 	MenuContainer.getChildren().clear();
-	MenuContainer.getChildren().add(new WondersHandController(h));
+	MenuContainer.getChildren().add(new WondersHandController(h, HoverTarget));
     }
 }

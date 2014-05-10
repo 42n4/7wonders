@@ -1,8 +1,6 @@
 package sevenWonders.frontend;
 
-import javafx.scene.control.TextField;
-
-import javafx.scene.control.ListCell;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.util.StringConverter;
@@ -73,9 +71,11 @@ public class WondersHandController extends AnchorPane implements Initializable {
     private Button doneButton; // returns the selected action
     
     private Hand hand;
+    private final ImageView hoverTarget;
     
-    public WondersHandController(Hand hand) {
+    public WondersHandController(Hand hand, ImageView hoverTarget) {
 	this.hand = hand;
+	this.hoverTarget = hoverTarget;
 	
         FXMLLoader loader = new FXMLLoader(sevenWonders.Program.getURL("WondersHand.fxml"));
         loader.setRoot(this);
@@ -91,7 +91,6 @@ public class WondersHandController extends AnchorPane implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 	assertContainers();
-//	Hand hand = GivfHand.Givf(); // TODO replace
 
 	List<ImageView> views = Arrays.asList(new ImageView[] { cardImage1,
 		cardImage2, cardImage3, cardImage4, cardImage5, cardImage6,
@@ -102,12 +101,28 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	Card[] cardArray = handCardSet.toArray(new Card[handCardSet.size()]);
 	String[] handCardNames = new String[cardArray.length];
 
+	//Mouseover event handlers - same as in PlayerBoard
+	EventHandler<MouseEvent> mouseIn = new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+        	ImageView target = (ImageView)e.getSource();
+        	hoverTarget.setImage(target.getImage());
+        	hoverTarget.setVisible(true);
+            }
+        };
+	EventHandler<MouseEvent> mouseOut = new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+            	hoverTarget.setVisible(false);
+            }
+        };
+	
 	// Fills the image views and the card choice box.
 	for (int i = 0; i < handCardNames.length; i++) {
-	    Image img = Program.getImageFromFilename("/" + cardArray[i].description);
+	    Image img = Program.getImageFromFilename(cardArray[i].description);
 	    ImageView cardView = views.get(i);
 	    cardView.setImage(img);
 	    cardBox.getItems().add(cardArray[i]);
+	    cardView.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseIn);
+            cardView.addEventHandler(MouseEvent.MOUSE_EXITED, mouseOut);
 	}
 
 	// Sets custom cell for paymentList.
