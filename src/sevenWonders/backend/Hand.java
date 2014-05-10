@@ -35,6 +35,12 @@ public class Hand {
 	public Map<Resource, Integer> rightResources;
 	public final boolean free;
 
+	/**
+	 * Depricated instead use:
+	 * <p><code>
+	 * Hand.PaymentOption.newBuilder().leftCost(6).rightCost(1)build();
+	 */
+	@Deprecated
 	public PaymentOption(int leftCost, int selfCost, int rightCost,
 		Map<Resource, Integer> leftResources,
 		Map<Resource, Integer> rightResources, boolean free) {
@@ -46,11 +52,71 @@ public class Hand {
 	    this.free = free;
 	}
 
+	@Deprecated
 	public PaymentOption(int leftCost, int selfCost, int rightCost,
 		Map<Resource, Integer> leftResources,
 		Map<Resource, Integer> rightResources) {
 	    this(leftCost, selfCost, rightCost, leftResources, rightResources,
 		    false);
+	}
+
+	PaymentOption(Builder builder) {
+	    this.leftCost = builder.leftCost;
+	    this.selfCost = builder.selfCost;
+	    this.rightCost = builder.rightCost;
+	    this.leftResources = builder.leftResources;
+	    this.rightResources = builder.rightResources;
+	    this.free = builder.free;
+	}
+
+	static Builder newBuilder() {
+	    return new Builder();
+	}
+
+	static class Builder {
+	    private int leftCost;
+	    private int selfCost;
+	    private int rightCost;
+	    private Map<Resource, Integer> leftResources = new HashMap<>();
+	    private Map<Resource, Integer> rightResources = new HashMap<>();
+	    private boolean free = false;
+	    
+	    private Builder() {
+	    }
+
+	    Builder leftCost(int money) {
+		this.leftCost = money;
+		return this;
+	    }
+
+	    Builder selfCost(int money) {
+		this.selfCost = money;
+		return this;
+	    }
+
+	    Builder rightCost(int money) {
+		this.rightCost = money;
+		return this;
+	    }
+
+	    Builder leftResource(Resource r, int nr) {
+		leftResources.put(r, nr);
+		return this;
+	    }
+
+	    Builder rightResource(Resource r, int nr) {
+		rightResources.put(r, nr);
+		return this;
+	    }
+
+	    Builder freeBuild(boolean b) {
+		this.free = b;
+		return this;
+	    }
+
+	    PaymentOption build() {
+		return new PaymentOption(this);
+	    }
 	}
     }
 }
