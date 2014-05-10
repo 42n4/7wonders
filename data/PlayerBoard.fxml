@@ -42,5 +42,10 @@
         <Image url="file:/E:/gitrepos/7wonders/data/Military5.png" />
       </image>
     </ImageView>
+    <Label fx:id="PlayerNameLabel" layoutX="225.0" layoutY="312.0" prefHeight="24.0" prefWidth="282.697998046875" text="Name name name">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
   </children>
 </fx:root>

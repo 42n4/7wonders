@@ -23,40 +23,65 @@ public class Deck {
 	if (era < 1 || era > 3 || playerCount < 3 || playerCount > 7) {
 	    throw new IllegalArgumentException("Invalid era or playercount.");
 	}
+	List<Card> deck = new LinkedList<>();
 	if (era == 1) {
 	    switch (playerCount) {
-	    	case (3):
-	    	    return getEra1Players3Deck();
-	    	case (4):
-	    	    return getEra1Players4Deck();
-    		case (5):
-    		    return getEra1Players5Deck();
-    		case (6):
-    		    return getEra1Players6Deck();
-    		case (7):
-    		    return getEra1Players7Deck();
+    		case 7:
+    		    getEra1Players7Deck(deck);
+    		    playerCount--;
+    		case 6:
+    		    getEra1Players6Deck(deck);
+    		    playerCount--;
+    		case 5:
+    		    getEra1Players5Deck(deck);
+    		    playerCount--;
+	    	case 4:
+	    	    getEra1Players4Deck(deck);
+    		    playerCount--;
+	    	case 3:
+	    	    getEra1Players3Deck(deck);
 	    }
 	} else if (era == 2) {
 	    switch (playerCount) {
-	    case (3):
-	    	    return getEra2Players3Deck();
-	    	case (4):
-	    	    return getEra2Players4Deck();
-		case (5):
-		    return getEra2Players5Deck();
-		case (6):
-		    return getEra2Players6Deck();
-		case (7):
-		    return getEra2Players7Deck();
+		case 7:
+		    getEra2Players7Deck(deck);
+    		    playerCount--;
+		case 6:
+		    getEra2Players6Deck(deck);
+    		    playerCount--;
+		case 5:
+		    getEra2Players5Deck(deck);
+    		    playerCount--;
+	    	case 4:
+	    	    getEra2Players4Deck(deck);
+    		    playerCount--;
+	    case 3:
+	    	    getEra2Players3Deck(deck);
 	    }
 	} else if (era == 3) {
-	    return getEra3Deck(playerCount);
+	    getGuildsDeck(playerCount, deck);
+	    switch(playerCount) {
+    		case 7:
+    		    getEra3Players7Deck(deck);
+    		    playerCount--;
+    		case 6:
+    		    getEra3Players6Deck(deck);
+    		    playerCount--;
+    		case 5:
+    		    getEra3Players5Deck(deck);
+    		    playerCount--;
+	    	case 4:
+	    	    getEra3Players4Deck(deck);
+    		    playerCount--;
+	    	case 3:
+	    	    getEra1Players3Deck(deck);
+	    }
 	}
-	return null; // makes complier happy
+	Collections.shuffle(deck);
+	return deck;
     }
 
-    private static List<Card> getEra1Players3Deck() {
-	List<Card> deck = new LinkedList<>();
+    private static void getEra1Players3Deck(List<Card> deck) {
 	deck.add(Card.newBrownCard().name("Stone Pit").id(1).description("era1 - 1.png").produce(Resource.STONE ,1).build());
 	deck.add(Card.newBlueCard().name("Theater").id(2).description("era1 - 2.png").postCards(69).points(2).build());
 	deck.add(Card.newGreenCard().name("Scriptorium").id(3).description("era1 - 3.png").postCards(68, 54).cost(Resource.PAPYRUS, 1).science(Science.WRITING).build());
@@ -78,44 +103,25 @@ public class Deck {
 	deck.add(Card.newBlueCard().name("Baths").id(19).description("era1 - 19.png").cost(Resource.STONE, 1).postCards(52).points(3).build());
 	deck.add(Card.newBrownCard().name("Timber Yard").id(20).description("era1 - 20.png").moneyCost(1).produce(Resource.STONE, 1).produce(Resource.WOOD,1).build());
 	deck.add(Card.newCostModifierCard().name("West Trading Post").id(21).description("era1 - 21.png").postCards(53).modifiedResources(Resource.CLAY, Resource.STONE, Resource.WOOD, Resource.ORE).modifyDirections(true, false).build());
-	Collections.shuffle(deck);
-	return deck;
     }
     
-    private static List<Card> getEra1Players4Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra1Players3Deck());
+    private static void getEra1Players4Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra1Players5Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra1Players4Deck());
+    private static void getEra1Players5Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra1Players6Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra1Players5Deck());
+    private static void getEra1Players6Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra1Players7Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra1Players6Deck());
+    private static void getEra1Players7Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
 
-    private static List<Card> getEra2Players3Deck() {
-	List<Card> deck = new LinkedList<>();
+    private static void getEra2Players3Deck(List<Card> deck) {
 	deck.add(Card.newBlueCard().name("Temple").id(50).description("era2 - 1.png").preCards(14).postCards(108).cost(Resource.WOOD, 1).cost(Resource.CLAY, 1).cost(Resource.GLASS, 1).points(3).build());
 	deck.add(Card.newYellowResourceCard().name("Caravansery").id(51).description("era2 - 2.png").preCards(12).postCards(100).cost(Resource.WOOD, 2).produce(Resource.WOOD, 1).produce(Resource.STONE, 1).produce(Resource.ORE, 1).produce(Resource.CLAY, 1).build());
 	deck.add(Card.newBlueCard().name("Aqueduct").id(52).description("era2 - 3.png").preCards(19).cost(Resource.STONE, 3).points(5).build());
@@ -137,71 +143,30 @@ public class Deck {
 	deck.add(Card.newBlueCard().name("Courthouse").id(68).description("era2 - 19.png").preCards(3).cost(Resource.CLAY, 3).cost(Resource.LOOM, 1).points(4).build());
 	deck.add(Card.newBlueCard().name("Statue").id(69).description("era2 - 20.png").preCards(2).postCards(103).cost(Resource.ORE, 2).cost(Resource.WOOD, 1).points(4).build());
 	deck.add(Card.newGreenCard().name("Dispensary").id(70).description("era2 - 21.png").preCards(15).postCards(110, 101).cost(Resource.ORE, 2).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
-	Collections.shuffle(deck);
-	return deck;
     }
     
-    private static List<Card> getEra2Players4Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra2Players3Deck());
+    private static void getEra2Players4Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra2Players5Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra2Players4Deck());
+    private static void getEra2Players5Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra2Players6Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra2Players5Deck());
+    private static void getEra2Players6Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
     }
     
-    private static List<Card> getEra2Players7Deck() {
-	    List<Card> deck = new LinkedList<>();
-	    deck.addAll(getEra2Players6Deck());
+    private static void getEra2Players7Deck(List<Card> deck) {
 	    //TODO add cards
-	    Collections.shuffle(deck);
-	    return deck;
-    }
-    
-    private static List<Card> getEra3Deck(int playerCount) {
-	    List<Card> deck = new LinkedList<>();
-	    deck = getGuildsDeck(playerCount);
-	    switch(playerCount) {
-	    case(3):
-		deck.addAll(getEra3Players3Deck());
-	    	return deck;
-	    case(4):
-		deck.addAll(getEra3Players4Deck());
-	    	return deck;
-	    case(5):
-		deck.addAll(getEra3Players5Deck());
-	    	return deck;
-	    case(6):
-		deck.addAll(getEra3Players6Deck());
-	    	return deck;
-	    case(7):
-		deck.addAll(getEra3Players7Deck());
-	    	return deck;
-	    }
-	    return deck; // makes complier happy
     }
     
     /**
      * @param playerCount
      * @return
      */
-    private static List<Card> getGuildsDeck(int playerCount) {
-	List<Card> deck = new LinkedList<>();
+    private static void getGuildsDeck(int playerCount, List<Card> returnDeck) {
+    List<Card> deck = new LinkedList<>();
 	deck.add(Card.newNeighborCardGuild().name("Philosophers Guild").id(139).description("guild - 1.png").cost(Resource.CLAY, 3).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).rewardCard(GreenCard.class).pointsReward(1).build());
 	deck.add(Card.newNeighborCardGuild().name("Traders Guild").id(140).description("guild - 2.png").cost(Resource.GLASS, 1).cost(Resource.LOOM, 1).cost(Resource.PAPYRUS, 1).rewardCard(YellowCard.class).pointsReward(1).build());
 	deck.add(Card.newShipownersGuild().name("Shipowners Guild").id(141).description("guild - 3.png").cost(Resource.WOOD, 3).cost(Resource.GLASS, 1).cost(Resource.PAPYRUS, 1).build());
@@ -217,11 +182,10 @@ public class Deck {
 	for (int i = 9; i > playerCount+2; i--) {
 	    deck.remove(i);
 	}
-	return deck;
+	returnDeck.addAll(deck);
     }
     
-    private static List<Card> getEra3Players3Deck() {
-    List<Card> deck = new LinkedList<>();
+    private static void getEra3Players3Deck(List<Card> deck) {
     deck.add(Card.newBuildingRewardCard().name("Haven").id(99).description("era 3 - 1.png").preCards(53).cost(Resource.WOOD, 1).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).rewardCard(BrownCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
     deck.add(Card.newBuildingRewardCard().name("Lighthouse").id(100).description("era 3 - 2.png").preCards(51).cost(Resource.STONE, 1).cost(Resource.GLASS, 1).rewardCard(YellowCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
     deck.add(Card.newWonderRewardCard().name("Arena").id(101).description("era2 - 3.png").preCards(70).cost(Resource.STONE, 2).cost(Resource.ORE, 1).build());
@@ -238,39 +202,21 @@ public class Deck {
     deck.add(Card.newGreenCard().name("Study").id(112).description("era3 - 14.png").preCards(58).cost(Resource.WOOD, 1).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).science(Science.MECHANICS).build());
     deck.add(Card.newBlueCard().name("Senate").id(113).description("era3 - 15.png").preCards(54).cost(Resource.WOOD, 2).cost(Resource.STONE, 1).cost(Resource.ORE, 1).points(6).build());
     deck.add(Card.newGreenCard().name("Observatory").id(114).description("era3 - 16.png").preCards(65).cost(Resource.ORE, 2).cost(Resource.GLASS, 1).cost(Resource.LOOM, 1).science(Science.MECHANICS).build());
-    Collections.shuffle(deck);
-    return deck;
     }
     
-    private static List<Card> getEra3Players4Deck() {
-    List<Card> deck = new LinkedList<>();
-    deck.addAll(getEra3Players3Deck());
+    private static void getEra3Players4Deck(List<Card> deck) {
     //TODO add cards
-    Collections.shuffle(deck);
-    return deck;
     }
     
-    private static List<Card> getEra3Players5Deck() {
-    List<Card> deck = new LinkedList<>();
-    deck.addAll(getEra3Players4Deck());
+    private static void getEra3Players5Deck(List<Card> deck) {
     //TODO add cards
-    Collections.shuffle(deck);
-    return deck;
     }
     
-    private static List<Card> getEra3Players6Deck() {
-    List<Card> deck = new LinkedList<>();
-    deck.addAll(getEra3Players5Deck());
+    private static void getEra3Players6Deck(List<Card> deck) {
     //TODO add cards
-    Collections.shuffle(deck);
-    return deck;
     }
     
-    private static List<Card> getEra3Players7Deck() {
-    List<Card> deck = new LinkedList<>();
-    deck.addAll(getEra3Players4Deck());
+    private static void getEra3Players7Deck(List<Card> deck) {
     //TODO add cards
-    Collections.shuffle(deck);
-    return deck;
     }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <HBox minHeight="150.0" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <ImageView id="imageView" fx:id="cardImage1" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+          <HBox.margin>
+            <Insets bottom="5.0" top="5.0" fx:id="x1" />
+          </HBox.margin>
+        </ImageView>
+        <ImageView id="cardImage" fx:id="cardImage2" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage3" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage4" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage5" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage6" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+        <ImageView fx:id="cardImage7" fitHeight="140.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" HBox.margin="$x1" />
+      </children>
+    </HBox>
+    <HBox id="HBox" alignment="CENTER" minHeight="140.0" prefWidth="581.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="155.0">
+      <children>
+        <VBox id="VBox" alignment="CENTER" spacing="1.0">
+          <children>
+            <Label id="pickedCard" text="Card" />
+            <ChoiceBox fx:id="cardBox" />
+            <Label id="pickedCard" text="Action" />
+            <ChoiceBox fx:id="actionBox" />
+            <Label id="pickedCard" text="Payment" />
+            <ChoiceBox fx:id="buildBox" />
+          </children>
+        </VBox>
+        <ListView fx:id="paymentList" prefHeight="140.0" prefWidth="469.0" HBox.hgrow="ALWAYS" />
+        <Button id="doneButoon" fx:id="doneButton" cancelButton="false" defaultButton="false" minHeight="20.0" minWidth="56.0" mnemonicParsing="false" text="Done" HBox.hgrow="NEVER">
+          <HBox.margin>
+            <Insets left="1.0" right="1.0" />
+          </HBox.margin>
+        </Button>
+      </children>
+    </HBox>
+  </children>
+</fx:root>

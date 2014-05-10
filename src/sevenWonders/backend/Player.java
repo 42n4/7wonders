@@ -1,7 +1,11 @@
 package sevenWonders.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
+import sevenWonders.backend.Wonder.StageType;
 
 public class Player {
     public final Wonder wonder;
@@ -68,5 +72,27 @@ public class Player {
      */
     public List<Card> getBuildings() {
 	return new ArrayList<Card>(buildings);
+    }
+
+    private static class HashMapp extends HashMap<Resource, Integer> {}
+    public static Player randPlayer() {
+	Random r = new Random();
+	int wonder = r.nextInt(14)+1;
+	
+        Player p = new Player("anders" + r.nextInt(100), new Wonder("wonder - "+wonder+".png", new HashMapp[3], Resource.CLAY, new Wonder.Stage[] {
+		new Wonder.Stage(StageType.COPYGUILD) {},
+		new Wonder.Stage(StageType.COPYGUILD) {},
+		new Wonder.Stage(StageType.COPYGUILD) {}
+	}));
+        p.leftMilitaryWins[0] = -1;
+        p.rightMilitaryWins[2] = 5;
+        p.addMoney(r.nextInt(15));
+        
+        List<Card> d = Deck.GetDeck(r.nextInt(3)+1, 3);
+        for (int i = r.nextInt(13)+6; i > 0; i--) {
+            p.buildCard(d.remove(0));
+        }
+        
+        return p;
     }
 }

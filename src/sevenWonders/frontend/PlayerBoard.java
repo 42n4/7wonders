@@ -13,6 +13,7 @@ import sevenWonders.backend.Player;
 import sevenWonders.backend.Wonder;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class PlayerBoard extends AnchorPane implements Initializable {
+
     private static final int NUMCARDS = 19; 
 
     @FXML
@@ -34,10 +36,11 @@ public class PlayerBoard extends AnchorPane implements Initializable {
     @FXML
     private ImageView BaseWonderStage;
     @FXML
-    private Label CoinLabel;
+    private Label CoinLabel, PlayerNameLabel;
     @FXML
     private ImageView BaseLeftMilitary, BaseRightMilitary;
     
+    private final ImageView hoverTarget;
     
     private ImageView[] cardsObjects = new ImageView[NUMCARDS];
     private ImageView[] stageObjects;
@@ -45,8 +48,9 @@ public class PlayerBoard extends AnchorPane implements Initializable {
     private ImageView[] rightMilitary = new ImageView[3];
     private Player player;
     
-    public PlayerBoard(Player player) {
+    public PlayerBoard(Player player, ImageView hoverTarget) {
         this.player = player;
+        this.hoverTarget = hoverTarget;
         stageObjects = new ImageView[player.wonder.stages.length];
 
         FXMLLoader loader = new FXMLLoader(Program.getURL("PlayerBoard.fxml"));
@@ -65,7 +69,21 @@ public class PlayerBoard extends AnchorPane implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-    // Initialize card placeholders
+	EventHandler<MouseEvent> mouseIn = new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+        	ImageView target = (ImageView)e.getSource();
+        	hoverTarget.setImage(target.getImage());
+        	hoverTarget.setVisible(true);
+            }
+        };
+	EventHandler<MouseEvent> mouseOut = new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+            	hoverTarget.setVisible(false);
+            }
+        };
+	
+	
+        // Initialize card placeholders
         int offsetX = 15, offsetY = 30, stackSize = 6,
             stackOffsetX = 110, stackOffsetY = -28;
         for (int i = 0; i < NUMCARDS; i++) {
@@ -77,6 +95,10 @@ public class PlayerBoard extends AnchorPane implements Initializable {
             v.setPreserveRatio(true);
             v.setFitHeight(BaseCard.getFitHeight());
             v.setFitWidth(BaseCard.getFitWidth());
+
+            
+            v.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseIn);
+            v.addEventHandler(MouseEvent.MOUSE_EXITED, mouseOut);
             
             cardsObjects[i] = v;
             this.getChildren().add(v);
@@ -90,6 +112,9 @@ public class PlayerBoard extends AnchorPane implements Initializable {
         this.getChildren().remove(BaseCard);
 
         // Initialize stages of the Wonder
+        WonderImage.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseIn);
+        WonderImage.addEventHandler(MouseEvent.MOUSE_EXITED, mouseOut);
+        
         Wonder wonder = player.wonder;
         int offsetStep = 65 - (int)BaseWonderStage.getFitWidth();
         if (wonder.stages.length == 4) {
@@ -143,6 +168,9 @@ public class PlayerBoard extends AnchorPane implements Initializable {
     }
     
     private void displayData() {
+        // Addresses player name
+        PlayerNameLabel.setText(player.name);
+
         // Addresses money
         CoinLabel.setText("" + player.getMoney());
 
@@ -161,6 +189,16 @@ public class PlayerBoard extends AnchorPane implements Initializable {
         List<Card> buildings = player.getBuildings();
         for (int i = 0; i < buildings.size(); i++) {
             cardsObjects[i].setImage(Program.getImageFromFilename(buildings.get(i).description));
+        }
+
+        // Addresses the Wonder
+        WonderImage.setImage(Program.getImageFromFilename(player.wonder.name));
+        
+        for (int i = 0; i < player.wonder.stages.length; i++) {
+            int era = player.wonder.stages[i].built();
+            if (era == 0) break;
+
+            stageObjects[i].setImage(Program.getImageFromFilename("era" + era + " - back.png"));
         }
     }
 }

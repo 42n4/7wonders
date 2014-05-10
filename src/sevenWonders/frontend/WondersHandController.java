@@ -20,15 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.io.IOException;
 import javafx.fxml.Initializable;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Tooltip;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.ChoiceBox;
+import sevenWonders.Program;
 
 /**
  * Together with WondersHanf.fxml describes and processes the logic for the
@@ -37,7 +41,7 @@ import javafx.scene.control.ChoiceBox;
  * 
  * @author Jenny Norelius & Andreas Jönsson
  */
-public class WondersHandController implements Initializable {
+public class WondersHandController extends AnchorPane implements Initializable {
     private final String BUILD = "Build";
     private final String WONDER = "Wonder";
     private final String SELL = "Sell";
@@ -67,11 +71,27 @@ public class WondersHandController implements Initializable {
     private ListView paymentList; // listview of available paymentoptions
     @FXML
     private Button doneButton; // returns the selected action
+    
+    private Hand hand;
+    
+    public WondersHandController(Hand hand) {
+	this.hand = hand;
+	
+        FXMLLoader loader = new FXMLLoader(sevenWonders.Program.getURL("WondersHand.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 	assertContainers();
-	Hand hand = GivfHand.Givf(); // TODO replace
+//	Hand hand = GivfHand.Givf(); // TODO replace
 
 	List<ImageView> views = Arrays.asList(new ImageView[] { cardImage1,
 		cardImage2, cardImage3, cardImage4, cardImage5, cardImage6,
@@ -84,9 +104,7 @@ public class WondersHandController implements Initializable {
 
 	// Fills the image views and the card choice box.
 	for (int i = 0; i < handCardNames.length; i++) {
-	    Image img = new Image("file:"
-		    + getClass().getResource("/" + cardArray[i].description)
-			    .getPath());
+	    Image img = Program.getImageFromFilename("/" + cardArray[i].description);
 	    ImageView cardView = views.get(i);
 	    cardView.setImage(img);
 	    cardBox.getItems().add(cardArray[i]);
