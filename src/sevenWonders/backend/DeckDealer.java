@@ -28,7 +28,7 @@ public class DeckDealer {
 	List<Card> deck = Deck.GetDeck(era, playerCount);
 
 	// Shuffles the deck and deals the cards in a traditional fashion
-	Collections.shuffle(deck);
+	//Collections.shuffle(deck);
 	for (int i = 0; i < deck.size(); i++) {
 	    hands[i % playerCount].add(deck.get(i));
 	}
