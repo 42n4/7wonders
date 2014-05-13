@@ -29,10 +29,12 @@ public class HandGenerator {
      *            at which index the player is at
      * @return
      */
-    static Hand getHand(List<Card> cards, Player[] players, int playerIndex) {
-	final Player player = players[playerIndex];
-	final Player left = players[modulo(playerIndex - 1, players.length)];
-	final Player right = players[modulo(playerIndex + 1, players.length)];
+    static Hand getHand(List<Card> cards, List<Player> players, int playerIndex) {
+	final Player player = players.get(playerIndex);
+	final Player left = players
+		.get(modulo(playerIndex - 1, players.size()));
+	final Player right = players
+		.get(modulo(playerIndex + 1, players.size()));
 	HashMap<Card, List<PaymentOption>> cardHand = new HashMap<>();
 	List<PaymentOption> wonderOptions = new ArrayList<>();
 	for (Card card : cards) {
@@ -53,7 +55,10 @@ public class HandGenerator {
 	    }
 	}
 	wonderOptions = getWonderOptions(player, left, right);
-
+	for (Card card : cardHand.keySet()) {
+	    cardHand.put(card, rinse(cardHand.get(card)));
+	}
+	wonderOptions = rinse(wonderOptions);
 	return new Hand(cardHand, wonderOptions);
     }
 
@@ -167,17 +172,29 @@ public class HandGenerator {
 	    for (; numberToBuy > 0;)
 		if (rightPrices.get(r) < leftPrices.get(r)
 			&& rightProduce.containsKey(r)) {
-		    rightBuys.put(r, rightBuys.get(r) + 1);
+		    int count = 0;
+		    if (rightBuys.containsKey(r)) {
+			count = rightBuys.get(r);
+		    }
+		    rightBuys.put(r, count + 1);
 		    rightProduce.put(r, rightProduce.get(r) - 1);
 		    rightCost += rightPrices.get(r);
 		    numberToBuy--;
 		} else if (leftProduce.containsKey(r)) {
-		    leftBuys.put(r, leftBuys.get(r) + 1);
+		    int count = 0;
+		    if (leftBuys.containsKey(r)) {
+			count = leftBuys.get(r);
+		    }
+		    leftBuys.put(r, count + 1);
 		    leftProduce.put(r, leftProduce.get(r) - 1);
 		    leftCost += leftPrices.get(r);
 		    numberToBuy--;
 		} else if (rightProduce.containsKey(r)) {
-		    rightBuys.put(r, rightBuys.get(r) + 1);
+		    int count = 0;
+		    if (rightBuys.containsKey(r)) {
+			count = rightBuys.get(r);
+		    }
+		    rightBuys.put(r, count + 1);
 		    rightProduce.put(r, rightProduce.get(r) - 1);
 		    rightCost += rightPrices.get(r);
 		    numberToBuy--;
@@ -294,12 +311,14 @@ public class HandGenerator {
 	for (int i = 0; i < playerProduce.size(); i++) {
 	    Map<Resource, Integer> leftOvers = new EnumMap<Resource, Integer>(
 		    Resource.class);
-	    for (Resource r : Resource.values()) {
-		if (cost.containsKey(r)) {
+	    for (Resource r : cost.keySet()) {
+		if (playerProduce.get(i).containsKey(r)) {
 		    int leftToBuy = cost.get(r) - playerProduce.get(i).get(r);
 		    if (leftToBuy > 0) {
 			leftOvers.put(r, leftToBuy);
 		    }
+		} else {
+		    leftOvers.put(r, cost.get(r));
 		}
 	    }
 	    if (!leftOvers.isEmpty()) {
@@ -346,11 +365,17 @@ public class HandGenerator {
 	    boolean onlySellable) {
 	List<Map<Resource, Integer>> produce = new ArrayList<>();
 	produce.add(new EnumMap<Resource, Integer>(Resource.class));
-	produce.get(1).put(player.wonder.produce, 1);
+	produce.get(0).put(player.wonder.produce, 1);
 	final List<ResourceCard> playerBuildings = getPlayerResorceBuildings(
 		player, onlySellable);
+
+	// for each resourcecard the player has built
 	for (ResourceCard building : playerBuildings) {
 	    Map<Resource, Integer> buildingProduce = building.getResources();
+
+	    // an array with the resources the building can produce, if it's
+	    // longer than one then it can produce one of the types of resources
+	    // in the array.
 	    final Resource[] res = building
 		    .getResources()
 		    .keySet()
@@ -362,19 +387,28 @@ public class HandGenerator {
 	    if (res.length == 1) {
 		// adds the new produce to every current option
 		for (int i = 0; i < produce.size(); i++) {
-		    final int current = produce.get(i).get(res[0]);
+		    int current = 0;
+		    if (produce.get(i).containsKey(res[0])) {
+			current = produce.get(i).get(res[0]);
+		    }
 		    produce.get(i).put(res[0],
 			    current + buildingProduce.get(res[0]));
 		}
 
-		// If there's multiple options for production for building
+		// If there's multiple options for production for a building
 	    } else if (res.length > 1) {
 		final int produceSize = produce.size();
 		for (int i = 0; i < produceSize * (res.length - 1); i++) {
-		    produce.add(produce.get(i % produceSize));
+		    // Create enough duplicates of the current maps to contain
+		    // all options
+		    produce.add(new EnumMap<Resource, Integer>(produce.get(i
+			    % produceSize)));
 		}
 		for (int i = 0; i < produce.size(); i++) {
-		    final int current = produce.get(i).get(res[i % res.length]);
+		    int current = 0;
+		    if (produce.get(i).containsKey(res[i % res.length])) {
+			current = produce.get(i).get(res[i % res.length]);
+		    }
 		    produce.get(i).put(res[i % res.length],
 			    current + buildingProduce.get(res[i % res.length]));
 		}
@@ -397,11 +431,36 @@ public class HandGenerator {
 	final List<Card> playerBuildings = player.getBuildings();
 	List<ResourceCard> playerResourceBuildings = new ArrayList<>();
 	for (Card building : playerBuildings) {
-	    if (building instanceof ResourceCard && onlySellable ? ((ResourceCard) building)
-		    .isSellable() : true) {
-		playerResourceBuildings.add((ResourceCard) building);
+	    if (building instanceof ResourceCard) {
+		if (!onlySellable) {
+		    playerResourceBuildings.add((ResourceCard) building);
+		} else if (((ResourceCard) building).isSellable()) {
+		    playerResourceBuildings.add((ResourceCard) building);
+		}
 	    }
 	}
 	return playerResourceBuildings;
+    }
+
+    /**
+     * @param wonderOptions
+     * @return 
+     */
+    private static List<PaymentOption> rinse(List<PaymentOption> options) {
+	options.removeAll(Collections.singleton(null));
+	List<PaymentOption> cleanOptions = new ArrayList<>();
+	for (PaymentOption o : options) {
+	    boolean isDuplicate = false;
+	    for (PaymentOption newO : cleanOptions) {
+		if (o.selfCost == newO.selfCost && o.leftCost == newO.leftCost
+			&& o.rightCost == newO.rightCost) {
+		    isDuplicate = true;
+		}
+	    }
+	    if (!isDuplicate) {
+		cleanOptions.add(o);
+	    }
+	}
+	return cleanOptions;
     }
 }

@@ -3,6 +3,7 @@ package sevenWonders.backend;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import sevenWonders.backend.Wonder.StageType;
@@ -78,8 +79,16 @@ public class Player {
     public static Player randPlayer() {
 	Random r = new Random();
 	int wonder = r.nextInt(14)+1;
+	@SuppressWarnings("unchecked")
+	Map<Resource, Integer>[] cost = new HashMap[3];
+	cost[0] = new HashMap<Resource, Integer>();
+	cost[1] = new HashMap<Resource, Integer>();
+	cost[2] = new HashMap<Resource, Integer>();
+	cost[0].put(Resource.CLAY, 2);
+	cost[1].put(Resource.STONE, 2);
+	cost[2].put(Resource.WOOD, 2);
 	
-        Player p = new Player("anders" + r.nextInt(100), new Wonder("wonder - "+wonder+".png", new HashMapp[3], Resource.CLAY, new Wonder.Stage[] {
+        Player p = new Player("anders" + r.nextInt(100), new Wonder("wonder - "+wonder+".png", cost, Resource.CLAY, new Wonder.Stage[] {
 		new Wonder.Stage(StageType.COPYGUILD) {},
 		new Wonder.Stage(StageType.COPYGUILD) {},
 		new Wonder.Stage(StageType.COPYGUILD) {}
