@@ -36,8 +36,21 @@ public class HandGenerator {
 	HashMap<Card, List<PaymentOption>> cardHand = new HashMap<>();
 	List<PaymentOption> wonderOptions = new ArrayList<>();
 	for (Card card : cards) {
-	    cardHand.put(card,
-		    getOptions(card.cost, card.moneyCost, player, left, right));
+	    // Checks if a card with same name is already built
+	    boolean isDuplicateCard = false;
+	    for (Card building : player.getBuildings()) {
+		if (building.name.equals(card.name)) {
+		    isDuplicateCard = true;
+		}
+	    }
+	    if (isDuplicateCard) {
+		cardHand.put(card, new ArrayList<PaymentOption>());
+	    } else {
+		cardHand.put(
+			card,
+			getOptions(card.cost, card.moneyCost, player, left,
+				right));
+	    }
 	}
 	wonderOptions = getWonderOptions(player, left, right);
 
@@ -138,7 +151,8 @@ public class HandGenerator {
 	    Map<Resource, Integer> leftP, Map<Resource, Integer> rightP,
 	    Map<Resource, Integer> leftPrices,
 	    Map<Resource, Integer> rightPrices) {
-	//TODO change to generate multiple paymentoptions instead of only the cheapest one.
+	// TODO change to generate multiple paymentoptions instead of only the
+	// cheapest one.
 	Map<Resource, Integer> leftProduce = new HashMap<Resource, Integer>(
 		leftP);
 	Map<Resource, Integer> rightProduce = new HashMap<Resource, Integer>(
