@@ -8,6 +8,8 @@ public interface ServerConnection {
     public boolean SendAction(Action action);
     
     public GamePackage GetGameState();
+
+    public int getPlayerIndex();
     
     public static class GamePackage {
 	GameState gameState;

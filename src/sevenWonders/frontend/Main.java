@@ -39,8 +39,10 @@ public class Main extends Application {
 	players.add(Player.randPlayer());
 	players.add(Player.randPlayer());
 
+	ServerConnection conn = new LocalClient(0);
+	
 	GameState gs = new GameState(players, 1, 1);
-	MainBoard page = new MainBoard();
+	MainBoard page = new MainBoard(conn);
 	
 	Scene scene = new Scene(page);
 	primaryStage.setScene(scene);

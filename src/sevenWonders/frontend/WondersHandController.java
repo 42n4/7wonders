@@ -44,6 +44,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
     private final String WONDER = "Wonder";
     private final String SELL = "Sell";
     private Action action; // the currently selected action
+    private final ServerConnection conn;
 
     @FXML
     private ImageView cardImage1;
@@ -73,7 +74,8 @@ public class WondersHandController extends AnchorPane implements Initializable {
     private Hand hand;
     private final ImageView hoverTarget;
     
-    public WondersHandController(Hand hand, ImageView hoverTarget) {
+    public WondersHandController(ServerConnection conn, Hand hand, ImageView hoverTarget) {
+	this.conn = conn;
 	this.hand = hand;
 	this.hoverTarget = hoverTarget;
 	
@@ -149,7 +151,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	    public void handle(ActionEvent arg0) {
 		if (actionBox.getValue().equals(SELL)
 			|| buildBox.getValue() != null) {
-		    // TODO send action
+		    conn.SendAction(action);
 		}
 	    }
 	});

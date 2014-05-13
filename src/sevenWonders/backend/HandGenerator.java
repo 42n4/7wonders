@@ -29,10 +29,10 @@ public class HandGenerator {
      *            at which index the player is at
      * @return
      */
-    static Hand getHand(List<Card> cards, Player[] players, int playerIndex) {
-	final Player player = players[playerIndex];
-	final Player left = players[modulo(playerIndex - 1, players.length)];
-	final Player right = players[modulo(playerIndex + 1, players.length)];
+    static Hand getHand(List<Card> cards, List<Player> players, int playerIndex) {
+	final Player player = players.get(playerIndex);
+	final Player left = players.get(modulo(playerIndex - 1, players.size()));
+	final Player right = players.get(modulo(playerIndex + 1, players.size()));
 	HashMap<Card, List<PaymentOption>> cardHand = new HashMap<>();
 	List<PaymentOption> wonderOptions = new ArrayList<>();
 	for (Card card : cards) {

@@ -27,8 +27,10 @@ public class MainBoard extends AnchorPane implements Initializable {
     private ImageView HoverTarget;
     
     private Pane[] playerBoards;
+    private final ServerConnection conn;
 
-    public MainBoard() {
+    public MainBoard(ServerConnection conn) {
+	this.conn = conn;
 	
         FXMLLoader loader = new FXMLLoader(Program.getURL("MainBoard.fxml"));
         loader.setRoot(this);
@@ -70,6 +72,6 @@ public class MainBoard extends AnchorPane implements Initializable {
     
     public void parseHand(Hand h) {
 	MenuContainer.getChildren().clear();
-	MenuContainer.getChildren().add(new WondersHandController(h, HoverTarget));
+	MenuContainer.getChildren().add(new WondersHandController(conn, h, HoverTarget));
     }
 }
