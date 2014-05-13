@@ -1,10 +1,10 @@
 package sevenWonders.backend;
 
-import java.util.EnumMap;
+import java.util.Map;
 
 public class Wonder {
     public final String name;
-    public final EnumMap<Resource, Integer>[] cost;
+    public final Map<Resource, Integer>[] cost;
     public final Resource produce;
     public final Stage[] stages;
     private int currentLevel = -1; 
@@ -15,7 +15,7 @@ public class Wonder {
      * @param cost
      * @param produce
      */
-    public Wonder(String name, EnumMap<Resource, Integer>[] cost, Resource produce, Stage[] stages) {
+    public Wonder(String name, Map<Resource, Integer>[] cost, Resource produce, Stage[] stages) {
 	this.name = name;
 	this.cost = cost;
 	this.produce = produce;
