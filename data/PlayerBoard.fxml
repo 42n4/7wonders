@@ -9,40 +9,40 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="440.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <ImageView fx:id="BaseCard" fitHeight="120.0" fitWidth="88.0" layoutX="38.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="BaseCard" fitHeight="0.0" fitWidth="60.0" layoutX="15.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@era1%20-%202.png" />
       </image>
     </ImageView>
-    <ImageView id="BaseWonderLevel" fx:id="BaseWonderStage" fitHeight="82.30222328244447" fitWidth="54.0" layoutX="508.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
+    <ImageView id="BaseWonderLevel" fx:id="BaseWonderStage" fitHeight="82.30222328244447" fitWidth="54.0" layoutX="360.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
       <image>
         <Image url="@era1%20-%2010.png" />
       </image>
     </ImageView>
-    <ImageView fx:id="WonderImage" fitHeight="99.0" fitWidth="220.0" layoutX="384.0" layoutY="126.0" pickOnBounds="true" preserveRatio="false" rotate="270.0">
+    <ImageView fx:id="WonderImage" fitHeight="99.0" fitWidth="220.0" layoutX="236.0" layoutY="126.0" pickOnBounds="true" preserveRatio="false" rotate="270.0">
       <image>
         <Image url="@wonder%20-%201.png" backgroundLoading="false" />
       </image>
     </ImageView>
-    <Circle fill="#fff500" layoutX="558.0" layoutY="313.0" radius="23.0" stroke="#ffc633" strokeType="INSIDE" strokeWidth="4.0" />
-    <Label fx:id="CoinLabel" alignment="CENTER" layoutX="533.0" layoutY="301.0" minWidth="50.0" text="a20" textAlignment="CENTER" wrapText="false">
+    <Circle fill="#fff500" layoutX="283.0" layoutY="29.0" radius="23.0" stroke="#ffc633" strokeType="INSIDE" strokeWidth="4.0" />
+    <Label fx:id="CoinLabel" alignment="CENTER" layoutX="258.0" layoutY="17.0" minWidth="50.0" text="a20" textAlignment="CENTER" wrapText="false">
       <font>
         <Font size="20.0" />
       </font>
     </Label>
-    <ImageView fx:id="BaseLeftMilitary" fitHeight="42.42387973336683" fitWidth="38.0" layoutX="15.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="BaseLeftMilitary" fitHeight="42.42387973336683" fitWidth="25.0" layoutX="15.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@Military5.png" />
       </image>
     </ImageView>
-    <ImageView fx:id="BaseRightMilitary" fitHeight="42.42387973336683" fitWidth="38.0" layoutX="546.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="BaseRightMilitary" fitHeight="42.42387973336683" fitWidth="25.0" layoutX="398.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="file:/E:/gitrepos/7wonders/data/Military5.png" />
       </image>
     </ImageView>
-    <Label fx:id="PlayerNameLabel" layoutX="225.0" layoutY="312.0" prefHeight="24.0" prefWidth="282.697998046875" text="Name name name">
+    <Label fx:id="PlayerNameLabel" layoutX="40.0" layoutY="269.0" prefHeight="24.0" prefWidth="282.697998046875" text="Name name name">
       <font>
         <Font size="18.0" />
       </font>

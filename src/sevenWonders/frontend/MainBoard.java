@@ -1,5 +1,6 @@
 package sevenWonders.frontend;
 
+import javafx.event.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class MainBoard extends AnchorPane implements Initializable {
@@ -44,6 +46,18 @@ public class MainBoard extends AnchorPane implements Initializable {
 	playerBoards = new Pane[] {
 	    PlayerBoard, OpponentBoard1, OpponentBoard2, OpponentBoard3, OpponentBoard4, OpponentBoard5, OpponentBoard6
 	};
+	HoverTarget.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+        	ImageView target = (ImageView)e.getSource();
+        	target.setVisible(true);
+            }
+	});
+        HoverTarget.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+        	ImageView target = (ImageView)e.getSource();
+        	target.setVisible(false);
+            }
+        });
     }
     
     public void parseGameState(GameState gs) {

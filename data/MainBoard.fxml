@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1880.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="925.0" prefWidth="1555.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <Pane fx:id="MenuContainer" layoutX="640.0" layoutY="148.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gray" />
-    <Pane fx:id="PlayerBoard" layoutX="640.0" layoutY="683.0" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard1" layoutX="1270.0" layoutY="720.0" prefHeight="350.0" prefWidth="600.0" rotate="0.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard2" layoutX="1270.0" layoutY="365.0" prefHeight="350.0" prefWidth="600.0" rotate="0.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard5" layoutX="10.0" layoutY="365.0" prefHeight="350.0" prefWidth="600.0" rotate="0.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard6" layoutX="10.0" layoutY="720.0" prefHeight="350.0" prefWidth="600.0" rotate="0.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard4" layoutX="10.0" layoutY="10.0" prefHeight="350.0" prefWidth="600.0" rotate="0.0" style="-fx-background-color: green&#10;" />
-    <Pane fx:id="OpponentBoard3" layoutX="1270.0" layoutY="10.0" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: green&#10;" />
-    <ImageView id="Hover" fx:id="HoverTarget" fitHeight="480.0" fitWidth="310.0" layoutX="785.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+    <Pane fx:id="MenuContainer" layoutX="480.0" layoutY="148.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gray" />
+    <Pane fx:id="PlayerBoard" layoutX="560.0" layoutY="620.0" prefHeight="300.0" prefWidth="440.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard1" layoutX="1110.0" layoutY="620.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard2" layoutX="1110.0" layoutY="315.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard5" layoutX="10.0" layoutY="315.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard6" layoutX="10.0" layoutY="620.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard4" layoutX="10.0" layoutY="10.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
+    <Pane fx:id="OpponentBoard3" layoutX="1110.0" layoutY="10.0" prefHeight="300.0" prefWidth="440.0" style="-fx-background-color: green&#10;" />
+    <ImageView id="Hover" fx:id="HoverTarget" fitHeight="480.0" fitWidth="310.0" layoutX="623.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" visible="true" />
   </children>
 </fx:root>

@@ -84,12 +84,16 @@ public class Player {
 		new Wonder.Stage(StageType.COPYGUILD) {},
 		new Wonder.Stage(StageType.COPYGUILD) {}
 	}));
-        p.leftMilitaryWins[0] = -1;
-        p.rightMilitaryWins[2] = 5;
+        for (int i = r.nextInt(3); i >= 0; i--) {
+            p.leftMilitaryWins[i] = 3;
+        }
+        for (int i = r.nextInt(3); i >= 0; i--) {
+            p.rightMilitaryWins[i] = 3;
+        }
         p.addMoney(r.nextInt(15));
         
         List<Card> d = Deck.GetDeck(r.nextInt(3)+1, 3);
-        for (int i = r.nextInt(13)+6; i > 0; i--) {
+        for (int i = r.nextInt(14)+6; i > 0; i--) {
             p.buildCard(d.remove(0));
         }
         

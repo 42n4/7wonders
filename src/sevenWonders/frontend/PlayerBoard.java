@@ -84,8 +84,8 @@ public class PlayerBoard extends AnchorPane implements Initializable {
 	
 	
         // Initialize card placeholders
-        int offsetX = 15, offsetY = 30, stackSize = 6,
-            stackOffsetX = 110, stackOffsetY = -28;
+        int offsetX = 10, offsetY = 22, stackSize = 6,
+            stackOffsetX = 78, stackOffsetY = -24;
         for (int i = 0; i < NUMCARDS; i++) {
             
             ImageView v = new ImageView();
@@ -154,6 +154,8 @@ public class PlayerBoard extends AnchorPane implements Initializable {
             r.setFitWidth(BaseRightMilitary.getFitWidth());
             l.setLayoutY(BaseLeftMilitary.getLayoutY());
             r.setLayoutY(BaseRightMilitary.getLayoutY());
+            l.setPreserveRatio(true);
+            r.setPreserveRatio(true);
 
             leftMilitary[i] = l;
             rightMilitary[i] = r;
