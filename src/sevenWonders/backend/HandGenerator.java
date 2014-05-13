@@ -10,12 +10,25 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Creates hands specific to a player.
+ * Creates hands specific to a player. It currently only gives you the cheapest
+ * paymentOptions.
  * 
  * @author Jenny Norelius & Andreas Jönsson
  */
 public class HandGenerator {
 
+    /**
+     * Creates a Hand object for a specific player containing the cards sent.
+     * The paymentOptions available will be the cheapest ones.
+     * 
+     * @param cards
+     *            the cards that should be in the player's hand
+     * @param players
+     *            all of the players in the game
+     * @param playerIndex
+     *            at which index the player is at
+     * @return
+     */
     static Hand getHand(List<Card> cards, Player[] players, int playerIndex) {
 	final Player player = players[playerIndex];
 	final Player left = players[modulo(playerIndex - 1, players.length)];
@@ -47,7 +60,7 @@ public class HandGenerator {
      *            player
      * @return
      */
-    static List<PaymentOption> getOptions(Map<Resource, Integer> cost,
+    private static List<PaymentOption> getOptions(Map<Resource, Integer> cost,
 	    int moneyCost, Player player, Player left, Player right) {
 	final List<Map<Resource, Integer>> playerProduce = getPlayerProduce(
 		player, false);
@@ -94,21 +107,88 @@ public class HandGenerator {
 	final Map<Resource, Integer> rightPrices = getNeighbourPrices(player,
 		false);
 	List<PaymentOption> options = new ArrayList<>();
-	//for each shoppingList
+	// for each mapoption in shoppingList
 	// for each combination of listentries in right and left Produce
 	// get options
-	for (int i = 0; i < shoppingList.size(); i++) {
-	    Resource[] buyOptions = new Resource[shoppingList.size()]; //TODO
-	    for (Resource r : shoppingList.get(i).keySet()) {
-		List<Map<Resource, int[]>> mew;
+	for (int s = 0; s < shoppingList.size(); s++) {
+	    for (int l = 0; l < leftProduce.size(); l++) {
+		for (int r = 0; r < rightProduce.size(); r++) {
+		    getSpecificNeighborPayment(options, shoppingList.get(s),
+			    player, moneyCost, leftProduce.get(l),
+			    rightProduce.get(r), leftPrices, rightPrices);
+		}
 	    }
+	}
+	return options;
+    }
+
+    /**
+     * This is where the final calculation magic happens. Currently it only
+     * calculates the cheapest options available.
+     * 
+     * @param options
+     * @param map
+     * @param map2
+     * @param map3
+     * @param leftPrices
+     * @param rightPrices
+     */
+    private static void getSpecificNeighborPayment(List<PaymentOption> options,
+	    Map<Resource, Integer> shoppingList, Player player, int moneyCost,
+	    Map<Resource, Integer> leftP, Map<Resource, Integer> rightP,
+	    Map<Resource, Integer> leftPrices,
+	    Map<Resource, Integer> rightPrices) {
+	//TODO change to generate multiple paymentoptions instead of only the cheapest one.
+	Map<Resource, Integer> leftProduce = new HashMap<Resource, Integer>(
+		leftP);
+	Map<Resource, Integer> rightProduce = new HashMap<Resource, Integer>(
+		rightP);
+	boolean enoughResources = true;
+	int leftCost = 0;
+	int rightCost = 0;
 	Map<Resource, Integer> leftBuys = new EnumMap<>(Resource.class);
 	Map<Resource, Integer> rightBuys = new EnumMap<>(Resource.class);
+	for (Resource r : shoppingList.keySet()) {
+	    int numberToBuy = shoppingList.get(r);
+	    for (; numberToBuy > 0;)
+		if (rightPrices.get(r) < leftPrices.get(r)
+			&& rightProduce.containsKey(r)) {
+		    rightBuys.put(r, rightBuys.get(r) + 1);
+		    rightProduce.put(r, rightProduce.get(r) - 1);
+		    rightCost += rightPrices.get(r);
+		    numberToBuy--;
+		} else if (leftProduce.containsKey(r)) {
+		    leftBuys.put(r, leftBuys.get(r) + 1);
+		    leftProduce.put(r, leftProduce.get(r) - 1);
+		    leftCost += leftPrices.get(r);
+		    numberToBuy--;
+		} else if (rightProduce.containsKey(r)) {
+		    rightBuys.put(r, rightBuys.get(r) + 1);
+		    rightProduce.put(r, rightProduce.get(r) - 1);
+		    rightCost += rightPrices.get(r);
+		    numberToBuy--;
+		} else {
+		    // Not enough resources available from neighbours
+		    numberToBuy = 0;
+		    enoughResources = false;
+		}
+	}
+	// If the purchase is possible, add to options
+	if (enoughResources
+		&& leftCost + rightCost + moneyCost <= player.getMoney()) {
+	    Hand.PaymentOption.Builder builder = Hand.PaymentOption
+		    .newBuilder();
+	    builder.selfCost(moneyCost).leftCost(leftCost).rightCost(rightCost);
+	    for (Resource r : leftBuys.keySet()) {
+		builder.leftResource(r, leftBuys.get(r));
+	    }
+	    for (Resource r : rightBuys.keySet()) {
+		builder.rightResource(r, rightBuys.get(r));
+	    }
+	    options.add(builder.build());
 	}
 
-	// TODO do the calculation magic and generate a list of PaymentOptions
-
-	return null;
+	// List<Map<Resource, int[]>> mew;
     }
 
     /**
@@ -226,14 +306,14 @@ public class HandGenerator {
      *            player
      * @return
      */
-    static List<PaymentOption> getWonderOptions(Player player, Player left,
-	    Player right) {
+    private static List<PaymentOption> getWonderOptions(Player player,
+	    Player left, Player right) {
 	final EnumMap<Resource, Integer> cost = player.wonder.cost[player.wonder
 		.getCurrentLevel() - 1];
 	return getOptions(cost, 0, player, left, right);
     }
 
-    static private int modulo(int x, int m) {
+    private static int modulo(int x, int m) {
 	final int result = x % m;
 	return (result >= 0) ? result : result + m;
     }
