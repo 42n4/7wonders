@@ -28,13 +28,13 @@ public class HandGenerator {
 	}
 	wonderOptions = getWonderOptions(player, left, right);
 
-	return Hand(cardHand, wonderOptions);
-	return null;
+	return new Hand(cardHand, wonderOptions);
     }
 
     /**
      * Given a buildingcost, a players produce, and the produce of the players
-     * neighbors, creates a list of available payment options.
+     * neighbours, creates a list of available payment options for a specific
+     * card.
      * 
      * @param cost
      *            to build the card/wonder
@@ -51,29 +51,33 @@ public class HandGenerator {
 	    int moneyCost, Player player, Player left, Player right) {
 	final List<Map<Resource, Integer>> playerProduce = getPlayerProduce(
 		player, false);
-	final List<Map<Resource, Integer>> leftProduce = getPlayerProduce(left,
-		true);
-	final List<Map<Resource, Integer>> rightProduce = getPlayerProduce(
-		right, true);
 	final List<Map<Resource, Integer>> shoppingList = reduceMap(cost,
 		playerProduce);
 	List<PaymentOption> options = new ArrayList<>();
 
+	// cant afford the selfcost
 	if (moneyCost > 0 && player.getMoney() < moneyCost) {
 	    return options;
 	}
-	if (cost.isEmpty() || shoppingList.isEmpty()) { // noCost
+	// can build at no cost other than selfcost
+	if (cost.isEmpty() || shoppingList.isEmpty()) {
 	    options.add(Hand.PaymentOption.newBuilder().selfCost(moneyCost)
 		    .build());
 	    return options;
 	}
+	// Resources needs to be bought.
+	final List<Map<Resource, Integer>> leftProduce = getPlayerProduce(left,
+		true);
+	final List<Map<Resource, Integer>> rightProduce = getPlayerProduce(
+		right, true);
 	return getNeighborPaymentPlan(player, moneyCost, shoppingList,
 		rightProduce, leftProduce);
     }
 
     /**
-     * Is only called if resources must be bought from neighbours. Genrates a
-     * list of payment options for the resources left to buy.
+     * Is only called if resources needed to build a card must be bought from
+     * neighbours. Generates a list of payment options for the resources left to
+     * buy.
      * 
      * @param shoppingList
      *            resources that needs to be bought
@@ -89,13 +93,18 @@ public class HandGenerator {
 		true);
 	final Map<Resource, Integer> rightPrices = getNeighbourPrices(player,
 		false);
-	for (int i = 0; i < shoppingList.size(); i++)
+	List<PaymentOption> options = new ArrayList<>();
+	//for each shoppingList
+	// for each combination of listentries in right and left Produce
+	// get options
+	for (int i = 0; i < shoppingList.size(); i++) {
 	    Resource[] buyOptions = new Resource[shoppingList.size()]; //TODO
 	    for (Resource r : shoppingList.get(i).keySet()) {
 		List<Map<Resource, int[]>> mew;
 	    }
 	Map<Resource, Integer> leftBuys = new EnumMap<>(Resource.class);
 	Map<Resource, Integer> rightBuys = new EnumMap<>(Resource.class);
+	}
 
 	// TODO do the calculation magic and generate a list of PaymentOptions
 
