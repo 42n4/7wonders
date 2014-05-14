@@ -15,16 +15,16 @@ import java.util.Map;
 public class PointCalculator {
 
     /**
-     * Returns a HashMap of all players with a list of their final scores
+     * Returns a List of all players with a list of their final scores
      * attached to them.
      * 
      * @param players
      * @return
      */
-    static Map<Player, List<Integer>> getPoints(List<Player> players) {
-	Map<Player, List<Integer>> points = new HashMap<>();
-	for (Player player : players) {
-	    points.put(player, getPlayerPoints(i, players));
+    static List<List<Integer>> getPoints(List<Player> players) {
+	List<List<Integer>> points = new ArrayList<>();
+	for (int i = 0; i < players.size(); i++) {
+	    points.add(i, getPlayerPoints(players.get(i)));
 	}
 	return points;
     }
