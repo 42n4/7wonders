@@ -20,8 +20,6 @@ public class Wonder {
 	this.cost = cost;
 	this.produce = produce;
 	this.stages = stages;
-        build(1);
-        build(2);
     }
 
     public int getCurrentLevel() {

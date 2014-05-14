@@ -1,6 +1,8 @@
 package sevenWonders.backend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import sevenWonders.backend.Hand.PaymentOption;
@@ -11,29 +13,25 @@ public class GameEngine {
     private ClientConnection[] playerClients;
     private List<Player> players;
     private int numPlayers;
+    private Money[] giveGold;
     
     
     private class HashMapp extends HashMap<Resource, Integer>{};
-    GameEngine(ClientConnection[] playerClients) {
+    GameEngine(ClientConnection[] playerClients, String[] playerNames) {
 	this.playerClients = playerClients;
 	numPlayers = playerClients.length;
 	
-	// TODO: Create real wonders etc.
+	// TODO: Handle this differently?
 	for (int i = 0; i < numPlayers; i++) {
-	    Wonder w = new Wonder("wonder - 1.png", new HashMapp[4], Resource.CLAY, new Wonder.Stage[] {
-		new Wonder.Stage(StageType.COPYGUILD) {},
-		new Wonder.Stage(StageType.COPYGUILD) {},
-		new Wonder.Stage(StageType.COPYGUILD) {},
-		new Wonder.Stage(StageType.COPYGUILD) {}
-	    });
-	    Player p = new Player("Andreas", w);
+	    Wonder w = WonderFactory.getRandomWonder();
+	    Player p = new Player(playerNames[i], w);
 	    players.add(p);
-	    p.addMoney(4);
+	    p.addMoney(3);
 	}
     }
 
     public void run() {
-	// The game ahs 3 eras
+	// The game has 3 eras
 	for (int era = 1; era <= 3; era++) {
 	    // Every era, new cards are needed
 	    List<Card>[] hands = dealer.getHands(era, numPlayers);
@@ -49,6 +47,8 @@ public class GameEngine {
 		    playerClients[i].SendGameState(gs, hand);
 		}
 
+		giveGold = new Money[numPlayers]; 
+		
 		// Gets responses from every client and acts thereafter
 		for (int i = 0; i < numPlayers; i++) {
 		    Action a = playerClients[i].GetAction();
@@ -59,12 +59,12 @@ public class GameEngine {
 		    switch (a.action) {
 		    case BUILD_BUILDING:
 			p.buildCard(a.card);
-			// TODO: execute actions
+			execute(a.card, i);
 			po = handsWithPaymentOptions[i].cards.get(a.card).get(a.paymentOptionIndex);
 			break;
 		    case BUILD_WONDER:
 			p.wonder.build(era);
-			// TODO: execute actions
+			execute(p.wonder.stages[p.wonder.getCurrentLevel()-1], i);
 			po = handsWithPaymentOptions[i].wonderPaymentOptions.get(a.paymentOptionIndex);
 			break;
 		    case DISCARD_CARD:
@@ -81,6 +81,15 @@ public class GameEngine {
 		    p.removeMoney(po.leftCost + po.selfCost + po.rightCost);
 		}
 		
+		GameRules.updateNeighborDependants(players);
+		
+		for (int i = 0; i < numPlayers; i++) {
+		    if (giveGold[i] != null) {
+			players.get(i).addMoney(giveGold[i].getMoney());
+		    }
+		}
+		// TODO: Special Wonder actions
+		
 		// rotation 1 means counter-clockwise
 		int rotation = 1;
 		// rotation -1 means clockwise
@@ -92,8 +101,16 @@ public class GameEngine {
 		}
 		hands[modulo(hands.length-rotation, numPlayers)] = temp;
 	    }
-	    // TODO: WAR!!!!
+	    // WAR!!!!
+	    GameRules.wageWar(players, era);
 	}
+    }
+    
+    private void execute(Object obj, int playerIndex) {
+	if (obj instanceof Money) {
+	    giveGold[playerIndex] = (Money)obj;
+	}
+	// TODO: identify special wonder actions
     }
     
     private int modulo(int a, int b) {
