@@ -15,8 +15,10 @@ import java.util.Map;
 public class PointCalculator {
 
     /**
-     * Returns a List of all players with a list of their final scores
-     * attached to them.
+     * Returns a List of all players with a list of their final scores attached
+     * to them. Points order: 0: Military Conflicts 1: Treasury Contents 2:
+     * Wonders 3: Civilian Structures 4: Scientific Structures 5: Commercial
+     * Structures 6: Guilds 7: Sum.
      * 
      * @param players
      * @return
@@ -50,6 +52,10 @@ public class PointCalculator {
 	points.add(5, commercePoints(player));
 	// Guilds
 	points.add(6, guildPoints(player));
+	// Sum
+	for (int i = 0; i < 7; i++) {
+	    points.add(7, points.get(0));
+	}
 
 	return points;
     }
@@ -71,7 +77,7 @@ public class PointCalculator {
 
     private static int wonderPoints(Player player) {
 	// How many stages are currently built on the players wonder
-	int wonderStages = player.wonder.getCurrentLevel() + 1;
+	int wonderStages = player.wonder.getCurrentLevel();
 	int wonder = 0;
 	for (int i = 0; i < wonderStages; i++) {
 	    if (player.wonder.stages[i] instanceof VictoryPoints) {
@@ -98,7 +104,7 @@ public class PointCalculator {
      */
     private static int sciencePoints(Player player) {
 	// How many stages are currently built on the players wonder
-	int wonderStages = player.wonder.getCurrentLevel() + 1;
+	int wonderStages = player.wonder.getCurrentLevel();
 	int[] scienceBuildings = new int[3];
 	int scienceChoices = 0;
 	for (Card c : player.getBuildings()) {
@@ -164,7 +170,7 @@ public class PointCalculator {
 	int guilds = 0;
 	for (Card card : player.getBuildings()) {
 	    if (card instanceof VictoryPoints) {
-		guilds += ((VictoryPoints)card).getVictoryPoints();
+		guilds += ((VictoryPoints) card).getVictoryPoints();
 	    }
 	}
 	return guilds;
