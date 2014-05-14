@@ -63,6 +63,36 @@ public class HandGenerator {
     }
 
     /**
+     * Denerates a hand out of the given cards. Cards with the same name as
+     * already built cards for the player will not be buildable. All other cards
+     * will have the paymentOption to build for free.
+     * 
+     * @param cards
+     * @param player
+     * @return
+     */
+    static Hand getFreeHand(List<Card> cards, Player player) {
+	HashMap<Card, List<PaymentOption>> cardHand = new HashMap<>();
+	List<PaymentOption> wonderOptions = new ArrayList<>();
+	for (Card card : cards) {
+	    // Checks if a card with same name is already built
+	    boolean isDuplicateCard = false;
+	    for (Card building : player.getBuildings()) {
+		if (building.name.equals(card.name)) {
+		    isDuplicateCard = true;
+		}
+	    }
+	    if (!isDuplicateCard) {
+		List<PaymentOption> option = new ArrayList<>();
+		option.add(Hand.PaymentOption.newBuilder().freeBuild(true)
+			.build());
+		cardHand.put(card, option);
+	    }
+	}
+	return new Hand(cardHand, wonderOptions);
+    }
+
+    /**
      * Given a buildingcost, a players produce, and the produce of the players
      * neighbours, creates a list of available payment options for a specific
      * card.
@@ -444,7 +474,7 @@ public class HandGenerator {
 
     /**
      * @param wonderOptions
-     * @return 
+     * @return
      */
     private static List<PaymentOption> rinse(List<PaymentOption> options) {
 	options.removeAll(Collections.singleton(null));
