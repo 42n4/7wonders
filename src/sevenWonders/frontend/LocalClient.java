@@ -1,5 +1,7 @@
 package sevenWonders.frontend;
 
+import java.util.List;
+
 import sevenWonders.backend.Action;
 import sevenWonders.backend.ClientConnection;
 import sevenWonders.backend.GameState;
@@ -25,11 +27,24 @@ public class LocalClient implements ServerConnection, ClientConnection {
 	synchronized (readyGameState) {
 	    if (readyGameState.b == true) return false;
 	    
+	    gp = new GamePackage();
 	    gp.gameState = gameState;
 	    gp.hand = hand;
 	    readyAction.b = true;
 	}
 	return true;
+    }
+    @Override
+    public boolean SendEndState(GameState gameState,
+            List<List<Integer>> victoryPoints) {
+	synchronized (readyGameState) {
+	    if (readyGameState.b == true) return false;
+
+	    gp = new GamePackage();
+	    gp.gameState = gameState;
+	    gp.points = victoryPoints;
+	}
+        return true;
     }
     
     @Override

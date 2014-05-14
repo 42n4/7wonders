@@ -16,7 +16,6 @@ public class GameEngine {
     private Money[] giveGold;
     
     
-    private class HashMapp extends HashMap<Resource, Integer>{};
     GameEngine(ClientConnection[] playerClients, String[] playerNames) {
 	this.playerClients = playerClients;
 	numPlayers = playerClients.length;
@@ -44,7 +43,8 @@ public class GameEngine {
 		// calculates paymentoptions for every player and sends data to client
 		for (int i = 0; i < numPlayers; i++) {
 		    Hand hand = handsWithPaymentOptions[i] = HandGenerator.getHand(hands[i], players, i);
-		    playerClients[i].SendGameState(gs, hand);
+		    // retries until succesful
+		    while(!playerClients[i].SendGameState(gs, hand));
 		}
 
 		giveGold = new Money[numPlayers]; 
@@ -104,6 +104,13 @@ public class GameEngine {
 	    // WAR!!!!
 	    GameRules.wageWar(players, era);
 	}
+	// The game is over, indicated by the era value of 4
+	GameState gs = new GameState(players, 4, -1);
+	List<List<Integer>> points = null;//PointCalculator.getPoints(players);
+	for (int i = 0; i < numPlayers; i++) {
+	    // retries until succesful
+	    while(!playerClients[i].SendEndState(gs, points));
+	}
     }
     
     private void execute(Object obj, int playerIndex) {
@@ -123,5 +130,25 @@ public class GameEngine {
     }
     private int right(int idx) {
 	return modulo(idx + 1, numPlayers);
+    }
+    
+    /**
+     * Creates a single player game vs AI
+     * @param playerName
+     * @param players
+     * @return
+     */
+    public static GameEngine createAIGame(String playerName, ClientConnection connection ,int players) {
+	ClientConnection[] connections = new ClientConnection[players];
+	String[] names = new String[players];
+
+	connections[0] = connection;
+	names[0] = playerName;
+	
+	for (int i = 1; i < players; i++) {
+	    connections[i] = new RandomAI(i, 60.0, 20.0);
+	    names[i] = "CPU " + i;
+	}
+	return new GameEngine(connections, names);
     }
 }

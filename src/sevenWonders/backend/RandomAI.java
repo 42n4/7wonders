@@ -2,6 +2,7 @@ package sevenWonders.backend;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import sevenWonders.backend.Action.ActionType;
@@ -73,6 +74,12 @@ public class RandomAI implements ClientConnection {
             nextAction = new Action(c, ActionType.DISCARD_CARD, -1);
         }
 	return true;
+    }
+    
+    @Override
+    public boolean SendEndState(GameState gameState,
+            List<List<Integer>> victoryPoints) {
+        return true;
     }
     
     @Override

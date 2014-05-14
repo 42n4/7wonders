@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import sevenWonders.Program;
+import sevenWonders.backend.ClientConnection;
+import sevenWonders.backend.GameEngine;
 import sevenWonders.backend.GameState;
 import sevenWonders.backend.Player;
 import sevenWonders.backend.Resource;
 import sevenWonders.backend.Wonder;
 import sevenWonders.backend.Wonder.StageType;
 import sevenWonders.backend.Deck;
+import sevenWonders.frontend.ServerConnection.GamePackage;
 import sun.net.www.content.text.plain;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,14 +37,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-	ArrayList<Player> players = new ArrayList<Player>(3);
-	players.add(Player.randPlayer());
-	players.add(Player.randPlayer());
-	players.add(Player.randPlayer());
 
 	ServerConnection conn = new LocalClient(0);
 	
-	GameState gs = new GameState(players, 1, 1);
 	MainBoard page = new MainBoard(conn);
 	
 	Scene scene = new Scene(page);
@@ -49,7 +47,22 @@ public class Main extends Application {
 	primaryStage.setTitle("BasicGame");
 	primaryStage.show();
 	
-	page.parseGameState(gs);
-	page.parseHand(GivfHand.Givf());
+	final GameEngine engine = GameEngine.createAIGame("Andreas", (ClientConnection)conn, 3);
+	
+	new Thread() {
+	    public void run() {
+		engine.run();
+	    }
+	}.start();
+	
+	while(true) {
+	    GamePackage gp = conn.GetGameState();
+	    
+	    page.parseGameState(gp.gameState);
+	    
+	    if (gp.gameState.currentEra == 4) break;
+	    page.parseHand(gp.hand);
+	}
+	// TODO: show points
     }
 }
