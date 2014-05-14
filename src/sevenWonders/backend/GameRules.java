@@ -35,11 +35,11 @@ public class GameRules {
 	    // No one wins
 	    if (shields[a] == shields[b]) continue;
 	    if (shields[a] > shields[b]) { // a wins
-		players.get(b).getMilitaryWins()[1][era] = -1;
+		players.get(b).getMilitaryWins()[0][era] = -1;
 		players.get(a).getMilitaryWins()[1][era] = pointsForWin[era];
 	    } else { // b wins
 		players.get(a).getMilitaryWins()[1][era] = -1;
-		players.get(b).getMilitaryWins()[1][era] = pointsForWin[era];
+		players.get(b).getMilitaryWins()[0][era] = pointsForWin[era];
 	    }
 	}
     }

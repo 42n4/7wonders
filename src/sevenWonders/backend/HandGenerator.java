@@ -372,7 +372,7 @@ public class HandGenerator {
     private static List<PaymentOption> getWonderOptions(Player player,
 	    Player left, Player right) {
 	final Map<Resource, Integer> cost = player.wonder.cost[player.wonder
-		.getCurrentLevel() - 1];
+		.getCurrentLevel()];
 	return getOptions(cost, 0, player, left, right);
     }
 

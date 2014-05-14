@@ -22,9 +22,16 @@ public class DeckDealer {
      * @return
      */
     List<Card>[] getHands(int era, int playerCount) {
-	@SuppressWarnings("unchecked")
-	// for this declaration only
-	List<Card>[] hands = new ArrayList[playerCount];
+	List<Card>[] hands;
+	{
+	    @SuppressWarnings("unchecked")
+	    // for this declaration only
+	    List<Card>[] temphands = new List[playerCount];
+	    hands = temphands;
+	}
+	for (int i = 0; i < playerCount; i++) {
+	    hands[i] = new LinkedList<>();
+	}
 	List<Card> deck = Deck.GetDeck(era, playerCount);
 
 	// Shuffles the deck and deals the cards in a traditional fashion

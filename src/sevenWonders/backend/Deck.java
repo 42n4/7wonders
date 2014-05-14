@@ -99,7 +99,7 @@ public class Deck {
 	deck.add(Card.newGreenCard().name("Apothecary").id(15).description("era1 - 15.png").postCards(62, 70).cost(Resource.LOOM, 1).science(Science.ASTRONOMY).build());
 	deck.add(Card.newGreenCard().name("Workshop").id(16).description("era1 - 16.png").postCards(65, 60).cost(Resource.GLASS, 1).science(Science.MECHANICS).build());
 	deck.add(Card.newBrownCard().name("Lumber Yard").id(17).description("era1 - 17.png").produce(Resource.WOOD,1).build());
-	deck.add(Card.newRedCard().name("Barracks").id(18).description("era1 -18.png").cost(Resource.ORE, 1).shields(1).build());
+	deck.add(Card.newRedCard().name("Barracks").id(18).description("era1 - 18.png").cost(Resource.ORE, 1).shields(1).build());
 	deck.add(Card.newBlueCard().name("Baths").id(19).description("era1 - 19.png").cost(Resource.STONE, 1).postCards(52).points(3).build());
 	deck.add(Card.newBrownCard().name("Timber Yard").id(20).description("era1 - 20.png").moneyCost(1).produce(Resource.STONE, 1).produce(Resource.WOOD,1).build());
 	deck.add(Card.newCostModifierCard().name("West Trading Post").id(21).description("era1 - 21.png").postCards(53).modifiedResources(Resource.CLAY, Resource.STONE, Resource.WOOD, Resource.ORE).modifyDirections(true, false).build());
@@ -129,7 +129,7 @@ public class Deck {
 	deck.add(Card.newGreenCard().name("Library").id(54).description("era2 - 5.png").preCards(3).postCards(113, 107).cost(Resource.STONE, 2).cost(Resource.LOOM, 1).science(Science.WRITING).build());
 	deck.add(Card.newGrayCard().name("Glassworks").id(55).description("era2 - 6.png").produce(Resource.GLASS, 1).build());
 	deck.add(Card.newBrownCard().name("Foundry").id(56).description("era2 - 7.png").moneyCost(1).produce(Resource.ORE, 2).build());
-	deck.add(Card.newBuildingRewardCard().name("Vineyard").id(57).description("era 2 - 8.png").rewardCard(BrownCard.class).neighbors(true).moneyReward(1).build());
+	deck.add(Card.newBuildingRewardCard().name("Vineyard").id(57).description("era2 - 8.png").rewardCard(BrownCard.class).neighbors(true).moneyReward(1).build());
 	deck.add(Card.newGreenCard().name("School").id(58).description("era2 - 9.png").postCards(102, 112).cost(Resource.WOOD, 1).cost(Resource.PAPYRUS, 1).science(Science.WRITING).build());
 	deck.add(Card.newGrayCard().name("Loom").id(59).description("era2 - 10.png").produce(Resource.LOOM, 1).build());
 	deck.add(Card.newRedCard().name("Archery Range").id(60).description("era2 - 11.png").preCards(16).cost(Resource.WOOD, 2).cost(Resource.ORE, 1).shields(2).build());

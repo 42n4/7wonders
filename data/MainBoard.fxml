@@ -2,9 +2,11 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
 <fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="925.0" prefWidth="1555.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
@@ -17,5 +19,15 @@
     <Pane fx:id="OpponentBoard4" layoutX="10.0" layoutY="10.0" prefHeight="300.0" prefWidth="440.0" rotate="0.0" style="-fx-background-color: green&#10;" />
     <Pane fx:id="OpponentBoard3" layoutX="1110.0" layoutY="10.0" prefHeight="300.0" prefWidth="440.0" style="-fx-background-color: green&#10;" />
     <ImageView id="Hover" fx:id="HoverTarget" fitHeight="480.0" fitWidth="310.0" layoutX="623.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" visible="true" />
+    <Label fx:id="EraLabel" layoutX="511.0" layoutY="32.0" text="Era label">
+      <font>
+        <Font size="30.0" />
+      </font>
+    </Label>
+    <Label fx:id="RoundLabel" layoutX="675.0" layoutY="37.0" text="Round label">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
   </children>
 </fx:root>

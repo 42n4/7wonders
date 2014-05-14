@@ -30,7 +30,7 @@ public class LocalClient implements ServerConnection, ClientConnection {
 	    gp = new GamePackage();
 	    gp.gameState = gameState;
 	    gp.hand = hand;
-	    readyAction.b = true;
+	    readyGameState.b = true;
 	}
 	return true;
     }
@@ -57,6 +57,9 @@ public class LocalClient implements ServerConnection, ClientConnection {
         	Thread.sleep(500);
             } catch (InterruptedException e) {}
         }
+        synchronized (readyGameState) {
+	    readyGameState.b = false;
+	}
         return gp;
     }
     
@@ -81,6 +84,9 @@ public class LocalClient implements ServerConnection, ClientConnection {
             try {
         	Thread.sleep(500);
             } catch (InterruptedException e) {}
+        }
+        synchronized (readyAction) {
+            readyAction.b = false;
         }
         return action;
     }

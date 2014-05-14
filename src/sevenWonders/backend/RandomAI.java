@@ -47,11 +47,12 @@ public class RandomAI implements ClientConnection {
         	|| hand.wonderPaymentOptions.size() == 0) {
             // Can't build on wonder. Is already built or no way to pay for it.
             // Removes chance of playing it.
-            playWonder = 1000;
+            playWonder = -1000;
         }
-        if (playable.size() == 0) {
-            playCard = 1000;
+        if (playable.size() <= 0) {
+            playCard = -1000;
         }
+        
 
         int roll = r.nextInt(chance);
         if (chanceToPlayCard <= roll && roll < chanceToPlayCard+playWonder) {

@@ -11,7 +11,7 @@ import sevenWonders.backend.Wonder.StageType;
 public class GameEngine {
     private DeckDealer dealer = new DeckDealer();
     private ClientConnection[] playerClients;
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     private int numPlayers;
     private Money[] giveGold;
     

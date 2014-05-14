@@ -38,9 +38,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-	ServerConnection conn = new LocalClient(0);
+	final ServerConnection conn = new LocalClient(0);
 	
-	MainBoard page = new MainBoard(conn);
+	final MainBoard page = new MainBoard(conn);
 	
 	Scene scene = new Scene(page);
 	primaryStage.setScene(scene);
@@ -55,14 +55,22 @@ public class Main extends Application {
 	    }
 	}.start();
 	
-	while(true) {
-	    GamePackage gp = conn.GetGameState();
-	    
-	    page.parseGameState(gp.gameState);
-	    
-	    if (gp.gameState.currentEra == 4) break;
-	    page.parseHand(gp.hand);
-	}
-	// TODO: show points
+	new Thread() {
+	    public void run() {
+    	    	while(true) {
+    	    	    final GamePackage gp = conn.GetGameState();
+    	    	    
+    	    	    Platform.runLater(new Runnable() { public void run() {
+    	    		page.parseGameState(gp.gameState);
+    	    	    }});
+    	    
+    	    	    if (gp.gameState.currentEra == 4) break;
+    	    	    Platform.runLater(new Runnable() { public void run() {
+	    		page.parseHand(gp.hand);
+	    	    }});
+    	    	}
+    	    	// TODO: show points
+	    }
+	}.start();
     }
 }

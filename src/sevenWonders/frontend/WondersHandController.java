@@ -14,6 +14,7 @@ import sevenWonders.backend.Hand.PaymentOption;
 import sevenWonders.backend.Hand;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -73,6 +74,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
     
     private Hand hand;
     private final ImageView hoverTarget;
+    private boolean isSent = false;
     
     public WondersHandController(ServerConnection conn, Hand hand, ImageView hoverTarget) {
 	this.conn = conn;
@@ -149,8 +151,19 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	doneButton.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
 	    public void handle(ActionEvent arg0) {
-		if (actionBox.getValue().equals(SELL)
-			|| buildBox.getValue() != null) {
+		if (!isSent && (actionBox.getValue().equals(SELL)
+			|| buildBox.getValue() != null)) {
+
+		    ActionType actionType = null;
+		    if (actionBox.getValue().equals(BUILD)) {
+			actionType = ActionType.BUILD_BUILDING;
+		    } else if (actionBox.getValue().equals(WONDER)) {
+			actionType = ActionType.BUILD_WONDER;
+		    } else if (actionBox.getValue().equals(SELL)) {
+			actionType = ActionType.DISCARD_CARD;
+		    }
+		    Action action = new Action(cardBox.getValue(), actionType, buildBox.getItems().indexOf(buildBox.getValue()));
+		    isSent = true;
 		    conn.SendAction(action);
 		}
 	    }
@@ -254,6 +267,11 @@ public class WondersHandController extends AnchorPane implements Initializable {
 		    public void changed(ObservableValue ov, Object oldSelected,
 			    Object newSelected) {
 			int index = Integer.parseInt(newSelected.toString());
+			if (actionBox.getValue() == null) {
+			    buildBox.getItems().setAll(new ArrayList<PaymentOption>());
+			    paymentList.getItems().setAll(new ArrayList<PaymentOption>());
+			    return;
+			}
 			if (actionBox.getValue().equals(BUILD)) {
 			    buildBox.setValue(null);
 			    List<PaymentOption> list = buildOptions
@@ -265,7 +283,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			    buildBox.getItems().setAll(wonderOptions);
 			    paymentList.getItems().setAll(wonderOptions);
 			} else if (actionBox.getValue().equals(SELL)) {
-			    paymentList.getItems().setAll("Sell for 3g.");
+			    //paymentList.getItems().setAll("Sell for 3g.");
 			}
 		    }
 		});
@@ -302,8 +320,8 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			    } else if (index == 2) { // SELL
 				buildBox.getItems().clear();
 				paymentList.getItems().clear();
-				paymentList.getItems().setAll("Sell for 3g.");
-				setAction(-1);
+				//paymentList.getItems().setAll("Sell for 3g.");
+				//setAction(-1);
 			    }
 			}
 		    }
@@ -323,7 +341,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			int index = Integer.parseInt(newSelected.toString());
 			if (!actionBox.getValue().isEmpty()
 				&& buildBox.getValue() != null) {
-			    setAction(index);
+			    //setAction(index);
 			}
 		    }
 		});

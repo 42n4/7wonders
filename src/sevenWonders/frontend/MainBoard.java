@@ -12,6 +12,7 @@ import sevenWonders.backend.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -25,6 +26,9 @@ public class MainBoard extends AnchorPane implements Initializable {
     
     @FXML
     private ImageView HoverTarget;
+    
+    @FXML
+    private Label EraLabel, RoundLabel;
     
     private Pane[] playerBoards;
     private final ServerConnection conn;
@@ -68,6 +72,8 @@ public class MainBoard extends AnchorPane implements Initializable {
 	    playerBoards[i].getChildren().clear();
 	    playerBoards[i].getChildren().add(pb);
 	}
+	EraLabel.setText("Era " + gs.currentEra);
+	RoundLabel.setText("Round " + gs.eraRound);
     }
     
     public void parseHand(Hand h) {
