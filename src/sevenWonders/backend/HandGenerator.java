@@ -7,7 +7,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Creates hands specific to a player. It currently only gives you the cheapest
@@ -47,6 +46,10 @@ public class HandGenerator {
 	    }
 	    if (isDuplicateCard) {
 		cardHand.put(card, new ArrayList<PaymentOption>());
+	    } else if (playerHasPreCard(card, player)) {
+		List<PaymentOption> options = new ArrayList<>();
+		options.add(Hand.PaymentOption.newBuilder().build());
+		cardHand.put(card, options);
 	    } else {
 		cardHand.put(
 			card,
@@ -470,6 +473,29 @@ public class HandGenerator {
 	    }
 	}
 	return playerResourceBuildings;
+    }
+
+    /**
+     * Checks if the player has built any of the pre-cards to the given card. If
+     * the player has a pre-card then it's free to build the new card and true
+     * is returned. Other wise false.
+     * 
+     * @return
+     */
+    private static boolean playerHasPreCard(Card card, Player player) {
+	if (card.preCards == null) {
+	    return false;
+	}
+	List<Integer> preCards = new ArrayList<>();
+	for (int i = 0; i < card.preCards.length; i++) {
+	    preCards.add(card.preCards[i]);
+	}
+	for (Card building : player.getBuildings()) {
+	    if (preCards.contains(building.id)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     /**
