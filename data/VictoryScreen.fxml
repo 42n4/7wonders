@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sevenWonders.frontend.VictoryScreenController">
+  <children>
+    <VBox prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Pane prefHeight="82.0" prefWidth="600.0">
+          <children>
+            <Label fx:id="status" layoutX="212.0" layoutY="14.0" prefHeight="56.0" prefWidth="176.0" text="Label">
+              <font>
+                <Font size="20.0" />
+              </font>
+            </Label>
+          </children>
+        </Pane>
+        <HBox prefHeight="49.0" prefWidth="600.0">
+          <children>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+              <children>
+                <Label id="cinflictLabel" fx:id="conflictLabel" layoutX="1.0" layoutY="24.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label fx:id="playerName1" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage1" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label id="playerName" fx:id="playerName2" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage2" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label id="playerName4" fx:id="playerName3" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage3" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label fx:id="playerName4" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage4" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label fx:id="playerName5" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage5" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label fx:id="playerName6" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage6" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label fx:id="playerName7" layoutX="1.0" layoutY="23.0" prefHeight="23.5546875" prefWidth="74.0000084472631" text="Label" />
+                <ImageView fx:id="playerImage7" fitHeight="21.0" fitWidth="28.0" layoutX="47.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </Pane>
+          </children>
+        </HBox>
+        <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+          <children>
+            <ListView id="list" fx:id="conflictList" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList1" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList2" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList3" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList4" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList5" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList6" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="playerList7" prefHeight="200.0" prefWidth="200.0" />
+          </children>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
