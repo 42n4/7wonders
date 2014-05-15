@@ -147,7 +147,7 @@ public class Deck {
 	deck.add(Card.newRedCard().name("Walls").id(66).description("era2 - 17.png").postCards(105).cost(Resource.STONE, 3).shields(2).build());
 	deck.add(Card.newBrownCard().name("Quarry").id(67).description("era2 - 18.png").moneyCost(1).produce(Resource.STONE, 2).build());
 	deck.add(Card.newBlueCard().name("Courthouse").id(68).description("era2 - 19.png").preCards(3, 27).cost(Resource.CLAY, 3).cost(Resource.LOOM, 1).points(4).build());
-	deck.add(Card.newBlueCard().name("Statue").id(69).description("era2 - 20.png").preCards(2).postCards(103).cost(Resource.ORE, 2).cost(Resource.WOOD, 1).points(4).build());
+	deck.add(Card.newBlueCard().name("Statue").id(69).description("era2 - 20.png").preCards(2).postCards(103, 118).cost(Resource.ORE, 2).cost(Resource.WOOD, 1).points(4).build());
 	deck.add(Card.newGreenCard().name("Dispensary").id(70).description("era2 - 21.png").preCards(15).postCards(110, 101).cost(Resource.ORE, 2).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
     }
     
@@ -200,7 +200,7 @@ public class Deck {
     private static void getEra3Players3Deck(List<Card> deck) {
     deck.add(Card.newBuildingRewardCard().name("Haven").id(99).description("era3 - 1.png").preCards(53).cost(Resource.WOOD, 1).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).rewardCard(BrownCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
     deck.add(Card.newBuildingRewardCard().name("Lighthouse").id(100).description("era3 - 2.png").preCards(51).cost(Resource.STONE, 1).cost(Resource.GLASS, 1).rewardCard(YellowCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
-    deck.add(Card.newWonderRewardCard().name("Arena").id(101).description("era2 - 3.png").preCards(70).cost(Resource.STONE, 2).cost(Resource.ORE, 1).build());
+    deck.add(Card.newWonderRewardCard().name("Arena").id(101).description("era3 - 3.png").preCards(70, 76).cost(Resource.STONE, 2).cost(Resource.ORE, 1).build());
     deck.add(Card.newGreenCard().name("Academy").id(102).description("era3 - 4.png").preCards(58).cost(Resource.STONE, 3).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
     deck.add(Card.newBlueCard().name("Gardens").id(103).description("era3 - 5.png").preCards(69).cost(Resource.CLAY, 2).cost(Resource.WOOD, 1).points(5).build());
     deck.add(Card.newRedCard().name("Arsenal").id(104).description("era3 - 6.png").cost(Resource.WOOD, 2).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).shields(3).build());
@@ -209,7 +209,7 @@ public class Deck {
     deck.add(Card.newGreenCard().name("University").id(107).description("era3 - 9.png").preCards(54).cost(Resource.WOOD, 2).cost(Resource.PAPYRUS, 1).cost(Resource.GLASS, 1).science(Science.WRITING).build());
     deck.add(Card.newBlueCard().name("Pantheon").id(108).description("era3 - 10.png").preCards(50).cost(Resource.CLAY, 2).cost(Resource.ORE, 1).cost(Resource.GLASS, 1).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).points(7).build());
     deck.add(Card.newBlueCard().name("Townhall").id(109).description("era3 - 11.png").cost(Resource.STONE, 2).cost(Resource.ORE, 1).cost(Resource.GLASS, 1).points(6).build());
-    deck.add(Card.newGreenCard().name("Lodge").id(110).description("era3 - 12.png").preCards(70).cost(Resource.CLAY, 2).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).science(Science.ASTRONOMY).build());
+    deck.add(Card.newGreenCard().name("Lodge").id(110).description("era3 - 12.png").preCards(70, 76).cost(Resource.CLAY, 2).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).science(Science.ASTRONOMY).build());
     deck.add(Card.newBlueCard().name("Palace").id(111).description("era3 - 13.png").cost(Resource.STONE, 1).cost(Resource.ORE, 1).cost(Resource.WOOD, 1).cost(Resource.CLAY, 1).cost(Resource.GLASS, 1).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).points(8).build());
     deck.add(Card.newGreenCard().name("Study").id(112).description("era3 - 14.png").preCards(58).cost(Resource.WOOD, 1).cost(Resource.PAPYRUS, 1).cost(Resource.LOOM, 1).science(Science.MECHANICS).build());
     deck.add(Card.newBlueCard().name("Senate").id(113).description("era3 - 15.png").preCards(54).cost(Resource.WOOD, 2).cost(Resource.STONE, 1).cost(Resource.ORE, 1).points(6).build());
