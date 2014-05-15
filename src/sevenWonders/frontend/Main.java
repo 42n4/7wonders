@@ -22,6 +22,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+	Scene scene = new Scene(new StartScreen(primaryStage));
+	primaryStage.setScene(scene);
+	primaryStage.setTitle("7 wonders");
+	primaryStage.show();
+	/*
 
 	final ServerConnection conn = new LocalClient(0);
 
@@ -72,5 +77,6 @@ public class Main extends Application {
 		}
 	    }
 	}.start();
+	*/
     }
 }

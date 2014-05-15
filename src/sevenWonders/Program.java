@@ -45,4 +45,17 @@ public class Program {
 	}
 	return ret;
     }
+    
+    public static void loadCardImages(int players) {
+	int amountOfCards = players * 7;
+	for (int era = 1; era <= 3; era++) {
+	    if (era == 3) {
+		amountOfCards -= players + 2;
+	    }
+	    
+	    for (int card = 1; card <= amountOfCards; card++) {
+		getImageFromFilename("era" + era + " - " + card + ".png");
+	    }
+	}
+    }
 }

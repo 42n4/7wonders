@@ -18,13 +18,13 @@ public class GameEngine {
     private int numPlayers;
     private Money[] giveGold;
 
-    GameEngine(ClientConnection[] playerClients, String[] playerNames) {
+    GameEngine(ClientConnection[] playerClients, String[] playerNames, boolean wonderBSide) {
 	this.playerClients = playerClients;
 	numPlayers = playerClients.length;
 
 	// TODO: Handle this differently?
 	for (int i = 0; i < numPlayers; i++) {
-	    Wonder w = WonderFactory.getRandomWonder();
+	    Wonder w = WonderFactory.getRandomWonder(wonderBSide);
 	    Player p = new Player(playerNames[i], w);
 	    players.add(p);
 	    p.addMoney(3);
@@ -155,7 +155,7 @@ public class GameEngine {
      * @return
      */
     public static GameEngine createAIGame(String playerName,
-	    ClientConnection connection, int players) {
+	    ClientConnection connection, int players, boolean useBSides) {
 	ClientConnection[] connections = new ClientConnection[players];
 	String[] names = new String[players];
 
@@ -166,6 +166,6 @@ public class GameEngine {
 	    connections[i] = new RandomAI(i, 60.0, 20.0);
 	    names[i] = "CPU " + i;
 	}
-	return new GameEngine(connections, names);
+	return new GameEngine(connections, names, useBSides);
     }
 }

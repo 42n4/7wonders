@@ -19,7 +19,8 @@ public class WonderFactory {
      * Will not return the same wonder twice unless you resetRandom()
      * @return A random Wonder
      */
-    public static Wonder getRandomWonder() {
+    public static Wonder getRandomWonder(boolean useBSide) {
+	// TODO: differentiate B-sides
 	if (returned.size() == allWonders.length) {
 	    throw new IllegalArgumentException("All wonders hve been used");
 	}

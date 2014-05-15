@@ -78,7 +78,7 @@ public class Player {
     private static class HashMapp extends HashMap<Resource, Integer> {}
     private static Random r = new Random();
     public static Player randPlayer() {
-        Player p = new Player("anders" + r.nextInt(100), WonderFactory.getRandomWonder());
+        Player p = new Player("anders" + r.nextInt(100), WonderFactory.getRandomWonder(true));
         for (int i = r.nextInt(3); i >= 0; i--) {
             p.leftMilitaryWins[i] = 3;
         }
