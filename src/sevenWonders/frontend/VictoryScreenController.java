@@ -150,6 +150,7 @@ public class VictoryScreenController extends AnchorPane implements Initializable
      */
     private List<Integer> getWinners() {
 	List<Integer> winners = new ArrayList<>();
+	winners.add(0);
 	for (int i = 1; i < points.size(); i++) {
 	    if (points.get(i).get(7) > points.get(winners.get(0)).get(7)) {
 		winners.clear();
