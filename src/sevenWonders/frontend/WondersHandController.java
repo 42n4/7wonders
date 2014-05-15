@@ -168,6 +168,10 @@ public class WondersHandController extends AnchorPane implements Initializable {
 		}
 	    }
 	});
+	
+	// Automatically chooses the first options, for lazyness
+	cardBox.setValue(cardArray[0]);
+	actionBox.setValue(BUILD);
     }
 
     /**
@@ -183,6 +187,9 @@ public class WondersHandController extends AnchorPane implements Initializable {
 
 	    @Override
 	    public String toString(PaymentOption o) {
+		if (o instanceof PaymentString) {
+		    return ((PaymentString)o).s;
+		}
 		if (o.free) {
 		    return "Free build";
 		}
@@ -195,6 +202,13 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	});
     }
 
+    private static class PaymentString extends PaymentOption {
+	String s;
+	PaymentString(String s) {
+	    super(0, 0, 0, null, null);
+	    this.s = s;
+	}
+    }
     /**
      * Sets a custom cell with a custom StringConverter of PaymentOptions for the 
      * listView paymentList.
@@ -216,6 +230,9 @@ public class WondersHandController extends AnchorPane implements Initializable {
 
 			    @Override
 			    public String toString(PaymentOption o) {
+				if (o instanceof PaymentString) {
+				    return ((PaymentString)o).s;
+				}
 				if (o.free) {
 				    return "Free build!";
 				}
@@ -278,13 +295,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 				    .get(cardArray[index]);
 			    buildBox.getItems().setAll(list);
 			    paymentList.getItems().setAll(list);
+			    if (list.size() == 0) {
+				paymentList.getItems().addAll(new PaymentString("Can not build"));
+			    }
 			} else if (actionBox.getValue().equals(WONDER)) {
 			    buildBox.setValue(null);
 			    buildBox.getItems().setAll(wonderOptions);
 			    paymentList.getItems().setAll(wonderOptions);
+			    if (wonderOptions.size() == 0) {
+				paymentList.getItems().addAll(new PaymentString("Can not build"));
+			    }
 			} else if (actionBox.getValue().equals(SELL)) {
-			    //paymentList.getItems().setAll("Sell for 3g.");
+			    paymentList.getItems().setAll(new PaymentString("Sell for 3g."));
+			    buildBox.getItems().setAll(new PaymentString("Sell"));
 			}
+			if (buildBox.getItems().size() != 0)
+			    buildBox.setValue(buildBox.getItems().get(0));
 		    }
 		});
     }
@@ -314,15 +340,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 					.get(cardBox.getValue());
 				buildBox.getItems().setAll(list);
 				paymentList.getItems().setAll(list);
+				if (list.size() == 0) {
+				    paymentList.getItems().addAll(new PaymentString("Can not build"));
+				}
 			    } else if (index == 1) { // WONDER
 				buildBox.getItems().setAll(wonderOptions);
 				paymentList.getItems().setAll(wonderOptions);
+				if (wonderOptions.size() == 0) {
+				    paymentList.getItems().addAll(new PaymentString("Can not build"));
+				}
 			    } else if (index == 2) { // SELL
-				buildBox.getItems().clear();
-				paymentList.getItems().clear();
-				//paymentList.getItems().setAll("Sell for 3g.");
+				paymentList.getItems().setAll(new PaymentString("Sell for 3g."));
+				buildBox.getItems().setAll(new PaymentString("Sell"));
 				//setAction(-1);
 			    }
+			    if (buildBox.getItems().size() != 0)
+				buildBox.setValue(buildBox.getItems().get(0));
 			}
 		    }
 		});
