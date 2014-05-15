@@ -74,7 +74,7 @@ public class Deck {
 	    	    getEra3Players4Deck(deck);
     		    playerCount--;
 	    	case 3:
-	    	    getEra1Players3Deck(deck);
+	    	    getEra3Players3Deck(deck);
 	    }
 	}
 	Collections.shuffle(deck);
@@ -179,15 +179,15 @@ public class Deck {
 	deck.add(Card.newNeighborCardGuild().name("Magistrates Guild").id(148).description("guild - 10.png").cost(Resource.WOOD, 3).cost(Resource.STONE, 1).cost(Resource.LOOM, 1).rewardCard(BlueCard.class).pointsReward(1).build());
 	Collections.shuffle(deck);
 	// Returns 5 cards for 3 players, 6 cards for 4 players,... 9 cards for 7 players.
-	for (int i = 9; i > playerCount+2; i--) {
+	for (int i = 9; i > playerCount+1; i--) {
 	    deck.remove(i);
 	}
 	returnDeck.addAll(deck);
     }
     
     private static void getEra3Players3Deck(List<Card> deck) {
-    deck.add(Card.newBuildingRewardCard().name("Haven").id(99).description("era 3 - 1.png").preCards(53).cost(Resource.WOOD, 1).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).rewardCard(BrownCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
-    deck.add(Card.newBuildingRewardCard().name("Lighthouse").id(100).description("era 3 - 2.png").preCards(51).cost(Resource.STONE, 1).cost(Resource.GLASS, 1).rewardCard(YellowCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
+    deck.add(Card.newBuildingRewardCard().name("Haven").id(99).description("era3 - 1.png").preCards(53).cost(Resource.WOOD, 1).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).rewardCard(BrownCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
+    deck.add(Card.newBuildingRewardCard().name("Lighthouse").id(100).description("era3 - 2.png").preCards(51).cost(Resource.STONE, 1).cost(Resource.GLASS, 1).rewardCard(YellowCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
     deck.add(Card.newWonderRewardCard().name("Arena").id(101).description("era2 - 3.png").preCards(70).cost(Resource.STONE, 2).cost(Resource.ORE, 1).build());
     deck.add(Card.newGreenCard().name("Academy").id(102).description("era3 - 4.png").preCards(58).cost(Resource.STONE, 3).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
     deck.add(Card.newBlueCard().name("Gardens").id(103).description("era3 - 5.png").preCards(69).cost(Resource.CLAY, 2).cost(Resource.WOOD, 1).points(5).build());
