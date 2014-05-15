@@ -96,7 +96,7 @@ public class Deck {
 	deck.add(Card.newCostModifierCard().name("Marketplace").id(12).description("era1 - 12.png").postCards(51).modifiedResources(Resource.GLASS, Resource.LOOM, Resource.PAPYRUS).modifyDirections(true, true).build());
 	deck.add(Card.newBrownCard().name("Ore Vein").id(13).description("era1 - 13.png").produce(Resource.ORE ,1).build());
 	deck.add(Card.newBlueCard().name("Altar").id(14).description("era1 - 14.png").postCards(50).points(2).build());
-	deck.add(Card.newGreenCard().name("Apothecary").id(15).description("era1 - 15.png").postCards(62, 70).cost(Resource.LOOM, 1).science(Science.ASTRONOMY).build());
+	deck.add(Card.newGreenCard().name("Apothecary").id(15).description("era1 - 15.png").postCards(62, 70, 76).cost(Resource.LOOM, 1).science(Science.ASTRONOMY).build());
 	deck.add(Card.newGreenCard().name("Workshop").id(16).description("era1 - 16.png").postCards(65, 60).cost(Resource.GLASS, 1).science(Science.MECHANICS).build());
 	deck.add(Card.newBrownCard().name("Lumber Yard").id(17).description("era1 - 17.png").produce(Resource.WOOD,1).build());
 	deck.add(Card.newRedCard().name("Barracks").id(18).description("era1 - 18.png").cost(Resource.ORE, 1).shields(1).build());
@@ -106,7 +106,13 @@ public class Deck {
     }
     
     private static void getEra1Players4Deck(List<Card> deck) {
-	    //TODO add cards
+	deck.add(Card.newBrownCard().name("Lumber Yard").id(22).description("era1 - 17.png").produce(Resource.WOOD,1).build());
+	deck.add(Card.newBrownCard().name("Excavation").id(23).description("era1 - 23.png").moneyCost(1).produce(Resource.STONE, 1).produce(Resource.CLAY, 1).build());
+	deck.add(Card.newBrownCard().name("Ore Vein").id(24).description("era1 - 13.png").produce(Resource.ORE ,1).build());
+	deck.add(Card.newBlueCard().name("Pawnshop").id(25).description("era1 - 25.png").points(3).build());
+	deck.add(Card.newBuildingRewardCard().name("Tavern").id(26).description("era2 - 26.png").moneyReward(5).build());
+	deck.add(Card.newGreenCard().name("Scriptorium").id(27).description("era1 - 3.png").postCards(68, 54).cost(Resource.PAPYRUS, 1).science(Science.WRITING).build());
+	deck.add(Card.newRedCard().name("Guard Tower").id(28).description("era1 - 8.png").cost(Resource.CLAY, 1).shields(1).build());
     }
     
     private static void getEra1Players5Deck(List<Card> deck) {
@@ -125,8 +131,8 @@ public class Deck {
 	deck.add(Card.newBlueCard().name("Temple").id(50).description("era2 - 1.png").preCards(14).postCards(108).cost(Resource.WOOD, 1).cost(Resource.CLAY, 1).cost(Resource.GLASS, 1).points(3).build());
 	deck.add(Card.newYellowResourceCard().name("Caravansery").id(51).description("era2 - 2.png").preCards(12).postCards(100).cost(Resource.WOOD, 2).produce(Resource.WOOD, 1).produce(Resource.STONE, 1).produce(Resource.ORE, 1).produce(Resource.CLAY, 1).build());
 	deck.add(Card.newBlueCard().name("Aqueduct").id(52).description("era2 - 3.png").preCards(19).cost(Resource.STONE, 3).points(5).build());
-	deck.add(Card.newYellowResourceCard().name("Forum").id(53).description("era2 - 4.png").preCards(5, 21).postCards(99).cost(Resource.CLAY, 2).produce(Resource.GLASS, 1).produce(Resource.LOOM, 1).produce(Resource.PAPYRUS, 1).build());
-	deck.add(Card.newGreenCard().name("Library").id(54).description("era2 - 5.png").preCards(3).postCards(113, 107).cost(Resource.STONE, 2).cost(Resource.LOOM, 1).science(Science.WRITING).build());
+	deck.add(Card.newYellowResourceCard().name("Forum").id(53).description("era2 - 4.png").preCards(5, 21).postCards(99, 119).cost(Resource.CLAY, 2).produce(Resource.GLASS, 1).produce(Resource.LOOM, 1).produce(Resource.PAPYRUS, 1).build());
+	deck.add(Card.newGreenCard().name("Library").id(54).description("era2 - 5.png").preCards(3, 27).postCards(113, 107, 115).cost(Resource.STONE, 2).cost(Resource.LOOM, 1).science(Science.WRITING).build());
 	deck.add(Card.newGrayCard().name("Glassworks").id(55).description("era2 - 6.png").produce(Resource.GLASS, 1).build());
 	deck.add(Card.newBrownCard().name("Foundry").id(56).description("era2 - 7.png").moneyCost(1).produce(Resource.ORE, 2).build());
 	deck.add(Card.newBuildingRewardCard().name("Vineyard").id(57).description("era2 - 8.png").rewardCard(BrownCard.class).neighbors(true).moneyReward(1).build());
@@ -140,13 +146,19 @@ public class Deck {
 	deck.add(Card.newGreenCard().name("Laboratory").id(65).description("era2 - 16.png").preCards(16).postCards(114, 106).cost(Resource.CLAY, 2).cost(Resource.PAPYRUS, 1).science(Science.MECHANICS).build());
 	deck.add(Card.newRedCard().name("Walls").id(66).description("era2 - 17.png").postCards(105).cost(Resource.STONE, 3).shields(2).build());
 	deck.add(Card.newBrownCard().name("Quarry").id(67).description("era2 - 18.png").moneyCost(1).produce(Resource.STONE, 2).build());
-	deck.add(Card.newBlueCard().name("Courthouse").id(68).description("era2 - 19.png").preCards(3).cost(Resource.CLAY, 3).cost(Resource.LOOM, 1).points(4).build());
+	deck.add(Card.newBlueCard().name("Courthouse").id(68).description("era2 - 19.png").preCards(3, 27).cost(Resource.CLAY, 3).cost(Resource.LOOM, 1).points(4).build());
 	deck.add(Card.newBlueCard().name("Statue").id(69).description("era2 - 20.png").preCards(2).postCards(103).cost(Resource.ORE, 2).cost(Resource.WOOD, 1).points(4).build());
 	deck.add(Card.newGreenCard().name("Dispensary").id(70).description("era2 - 21.png").preCards(15).postCards(110, 101).cost(Resource.ORE, 2).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
     }
     
     private static void getEra2Players4Deck(List<Card> deck) {
-	    //TODO add cards
+	deck.add(Card.newRedCard().name("Training Ground").id(71).description("era2 - 22.png").postCards(117).cost(Resource.ORE, 2).cost(Resource.WOOD, 1).shields(2).build());
+	deck.add(Card.newBuildingRewardCard().name("Bazar").id(72).description("era2 - 23.png").rewardCard(GrayCard.class).neighbors(true).moneyReward(2).build());
+	deck.add(Card.newBrownCard().name("Sawmill").id(73).description("era2 - 15.png").moneyCost(1).produce(Resource.WOOD, 2).build());
+	deck.add(Card.newBrownCard().name("Foundry").id(74).description("era2 - 7.png").moneyCost(1).produce(Resource.ORE, 2).build());
+	deck.add(Card.newBrownCard().name("Brickyard").id(75).description("era2 - 12.png").moneyCost(1).produce(Resource.CLAY, 2).build());
+	deck.add(Card.newGreenCard().name("Dispensary").id(76).description("era2 - 21.png").preCards(15).postCards(110, 101).cost(Resource.ORE, 2).cost(Resource.GLASS, 1).science(Science.ASTRONOMY).build());
+	deck.add(Card.newBrownCard().name("Quarry").id(67).description("era2 - 18.png").moneyCost(1).produce(Resource.STONE, 2).build());
     }
     
     private static void getEra2Players5Deck(List<Card> deck) {
@@ -205,7 +217,12 @@ public class Deck {
     }
     
     private static void getEra3Players4Deck(List<Card> deck) {
-    //TODO add cards
+	deck.add(Card.newGreenCard().name("University").id(115).description("era3 - 9.png").preCards(54).cost(Resource.WOOD, 2).cost(Resource.PAPYRUS, 1).cost(Resource.GLASS, 1).science(Science.WRITING).build());
+	deck.add(Card.newRedCard().name("Arsenal").id(116).description("era3 - 6.png").cost(Resource.WOOD, 2).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).shields(3).build());
+	deck.add(Card.newRedCard().name("Circus").id(117).description("era3 - 19.png").preCards(71).cost(Resource.STONE, 3).cost(Resource.ORE, 1).shields(3).build());
+	deck.add(Card.newBlueCard().name("Gardens").id(118).description("era3 - 5.png").preCards(69).cost(Resource.CLAY, 2).cost(Resource.WOOD, 1).points(5).build());
+	deck.add(Card.newBuildingRewardCard().name("Haven").id(119).description("era3 - 1.png").preCards(53).cost(Resource.WOOD, 1).cost(Resource.ORE, 1).cost(Resource.LOOM, 1).rewardCard(BrownCard.class).neighbors(false).moneyReward(1).pointsReward(1).build());
+	deck.add(Card.newBuildingRewardCard().name("Chamber of Commerce").id(120).description("era3 - 22.png").rewardCard(GrayCard.class).neighbors(false).moneyReward(2).pointsReward(2).build());
     }
     
     private static void getEra3Players5Deck(List<Card> deck) {
