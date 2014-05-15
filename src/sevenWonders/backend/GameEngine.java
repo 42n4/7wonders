@@ -90,16 +90,19 @@ public class GameEngine {
 		}
 		// TODO: Special Wonder actions
 		
-		// rotation 1 means counter-clockwise
-		int rotation = 1;
-		// rotation -1 means clockwise
-		if (era == 2) rotation = -1;
-		
-		List<Card> temp = hands[0];
-		for (int i = 0; i < hands.length-1; i++) {
-		    hands[i] = hands[modulo(i+rotation, numPlayers)];
+		if (era == 2) { //rotates counter-clockwise
+		    List<Card> temp = hands[hands.length - 1];
+		    for (int i = hands.length - 1; i > 0; i--) {
+			hands[i] = hands[modulo(i - 1, numPlayers)];
+		    }
+		    hands[0] = temp;
+		} else { //rotates clockwise
+		    List<Card> temp = hands[0];
+		    for (int i = 0; i < hands.length - 1; i++) {
+			hands[i] = hands[modulo(i + 1, numPlayers)];
+		    }
+		    hands[modulo(hands.length - 1, numPlayers)] = temp;
 		}
-		hands[modulo(hands.length-rotation, numPlayers)] = temp;
 	    }
 	    // WAR!!!!
 	    GameRules.wageWar(players, era);
