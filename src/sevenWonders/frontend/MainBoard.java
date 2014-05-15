@@ -96,6 +96,5 @@ public class MainBoard extends AnchorPane implements Initializable {
 	MenuContainer.getChildren().clear();
 	MenuContainer.getChildren().add(
 		new VictoryScreenController(points, players, playerIndex));
-	System.err.println("Hi from the pointsparser");
     }
 }

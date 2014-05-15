@@ -55,7 +55,6 @@ public class Main extends Application {
 
 		    // Shows the victory screen if game is over
 		    if (gp.gameState.currentEra == 4) {
-			// TODO currently the fxml loader doesn't work.
 			Platform.runLater(new Runnable() {
 			    public void run() {
 				page.parsePoints(gp.points,

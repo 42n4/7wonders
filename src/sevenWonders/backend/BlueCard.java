@@ -13,7 +13,7 @@ public class BlueCard extends Card implements VictoryPoints {
     
     BlueCard(BlueCardBuilder builder){
 	super(builder);
-	
+	this.victoryPoints = builder.points;
     }
     
     @Override

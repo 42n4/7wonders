@@ -53,9 +53,11 @@ public class PointCalculator {
 	// Guilds
 	points.add(6, guildPoints(player));
 	// Sum
+	int sum = 0;
 	for (int i = 0; i < 7; i++) {
-	    points.add(7, points.get(0));
+	    sum += points.get(i);
 	}
+	points.add(7, sum);
 
 	return points;
     }
@@ -91,8 +93,8 @@ public class PointCalculator {
     private static int civilianPoints(Player player) {
 	int civilian = 0;
 	for (Card card : player.getBuildings()) {
-	    if (card instanceof VictoryPoints) {
-		civilian += ((VictoryPoints) card).getVictoryPoints();
+	    if (card instanceof BlueCard) {
+		civilian += ((BlueCard) card).getVictoryPoints();
 	    }
 	}
 	return civilian;
@@ -159,8 +161,8 @@ public class PointCalculator {
     private static int commercePoints(Player player) {
 	int commerce = 0;
 	for (Card card : player.getBuildings()) {
-	    if (card instanceof BuildingRewardCard) {
-		commerce += ((BuildingRewardCard) card).getVictoryPoints();
+	    if (card instanceof YellowCard && card instanceof VictoryPoints) {
+		commerce += ((VictoryPoints) card).getVictoryPoints();
 	    }
 	}
 	return commerce;
@@ -169,7 +171,7 @@ public class PointCalculator {
     private static int guildPoints(Player player) {
 	int guilds = 0;
 	for (Card card : player.getBuildings()) {
-	    if (card instanceof VictoryPoints) {
+	    if (card instanceof PurpleCard && card instanceof VictoryPoints) {
 		guilds += ((VictoryPoints) card).getVictoryPoints();
 	    }
 	}

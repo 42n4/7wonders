@@ -87,7 +87,7 @@ public class VictoryScreenController extends AnchorPane implements Initializable
 	this.players = players;
 	this.playerIndex = playerIndex;
 	identifier = Arrays.asList("Military", "Treasury", "Wonders",
-		"Civilian", "Scientific", "Commercial", "Guilds");
+		"Civilian", "Scientific", "Commerce", "Guilds", "Total");
 
 	FXMLLoader loader = new FXMLLoader(
 		sevenWonders.Program.getURL("VictoryScreen.fxml"));
