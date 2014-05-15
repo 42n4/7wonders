@@ -61,6 +61,7 @@ public class Main extends Application {
 					gp.gameState.players, 0);
 			    }
 			});
+			gameNotFinished = false;
 		    } else {
 			Platform.runLater(new Runnable() {
 			    public void run() {

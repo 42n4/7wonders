@@ -131,11 +131,13 @@ public class PointCalculator {
 	// 1-2 choices
 	int maxPoints = 0;
 	for (int i = 0; i < Science.values().length; i++) {
-	    int[] temp = scienceBuildings;
+	    int[] temp = new int[3];
+	    System.arraycopy(scienceBuildings, 0, temp, 0, 3);
 	    temp[i]++;
 	    if (scienceChoices > 1) { // 2 choices
 		for (int j = 0; j < Science.values().length; j++) {
-		    int[] temp2 = temp;
+		    int[] temp2 = new int[3];
+		    System.arraycopy(temp, 0, temp2, 0, 3);
 		    temp[j]++;
 		    maxPoints = Math.max(maxPoints,
 			    calculateSciencePoints(temp2));

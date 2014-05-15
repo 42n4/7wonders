@@ -81,10 +81,40 @@ public class GameRules {
         		if (c.cardType == compare.getClass())
         		    count++;
         	    }
-        	} else if(nd instanceof WonderRewardCard) {
+        	} else if (nd instanceof WonderRewardCard) {
         	    count = players.get(i).wonder.getCurrentLevel();
+        	} else if (nd instanceof NeighborCardGuild) {
+        	    NeighborCardGuild c = (NeighborCardGuild)nd;
+        	    for (Player p : new Player[] {
+            		players.get(left(i, numPlayers)),
+            		players.get(right(i, numPlayers))
+            	    }) for (Card compare : p.getBuildings()) {
+        		if (c.cardType == compare.getClass())
+        		    count++;
+        	    }
+        	} else if (nd instanceof BuildersGuild) {
+        	    count += players.get(i).wonder.getCurrentLevel();
+        	    count += players.get(left(i, numPlayers)).wonder.getCurrentLevel();
+        	    count += players.get(right(i, numPlayers)).wonder.getCurrentLevel();
+        	} else if (nd instanceof StrategistGuild) {
+        	    for (Player p : new Player[] {
+            		players.get(left(i, numPlayers)),
+            		players.get(right(i, numPlayers))
+            	    }) for (int[] militaryWins: p.getMilitaryWins())
+            	       for (int win : militaryWins){
+            		if (win == -1) {
+            		    count++;
+            		}
+            	    }
+        	} else if (nd instanceof ShipownersGuild) {
+        	    for (Card c : players.get(i).getBuildings()) {
+        		if (c instanceof BrownCard 
+        		 || c instanceof GrayCard
+        		 || c instanceof PurpleCard) {
+        		    count++;
+        		}
+        	    }
         	}
-        	// TODO: Consider guilds
         	nd.update(count);
 	    }
 	}
