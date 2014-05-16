@@ -5,26 +5,30 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import sevenWonders.Program;
 import sevenWonders.backend.ClientConnection;
 import sevenWonders.backend.GameEngine;
 import sevenWonders.frontend.ServerConnection.GamePackage;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
+/**
+ * StartScreen is the gui element that represents the startscreen gui element.
+ * You can choose number of players, input name, choose A or B sides of Wonders,
+ * read the manual (launches as a seperate file), read instructions and quit the
+ * game.
+ * 
+ * @author Jenny Norelius & Andreas Jönsson
+ */
 public class StartScreen extends AnchorPane implements Initializable {
 
     @FXML
@@ -32,16 +36,17 @@ public class StartScreen extends AnchorPane implements Initializable {
 
     @FXML
     private CheckBox SidesChooser;
-    
+
     @FXML
     private ChoiceBox<Integer> NumPlayerChoice;
-    
+
     private Stage parent;
 
     public StartScreen(Stage parent) {
 	this.parent = parent;
-	
-	FXMLLoader loader = new FXMLLoader(sevenWonders.Program.getURL("StartScreen.fxml"));
+
+	FXMLLoader loader = new FXMLLoader(
+		sevenWonders.Program.getURL("StartScreen.fxml"));
 	loader.setRoot(this);
 	loader.setController(this);
 
@@ -51,7 +56,7 @@ public class StartScreen extends AnchorPane implements Initializable {
 	    throw new RuntimeException(e);
 	}
     }
-    
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
     }
@@ -64,13 +69,13 @@ public class StartScreen extends AnchorPane implements Initializable {
     @FXML
     void instructionsClick(ActionEvent event) {
 	String instructions = "Play the goddamn game!";
-	
+
 	Label label = new Label(instructions);
 	label.setPadding(new Insets(30));
 	Pane p = new Pane();
 	p.getChildren().add(label);
-	
-	Scene scene =  new Scene(p);
+
+	Scene scene = new Scene(p);
 	Stage stage = new Stage();
 	stage.setScene(scene);
 	stage.setTitle("Instructions");
@@ -82,7 +87,8 @@ public class StartScreen extends AnchorPane implements Initializable {
 	new Thread() {
 	    public void run() {
 		try {
-		    Desktop.getDesktop().open(new File(Program.getURL("rulebook.pdf").toURI()));
+		    Desktop.getDesktop().open(
+			    new File(Program.getURL("rulebook.pdf").toURI()));
 		} catch (Exception e) {
 		    throw new RuntimeException(e);
 		}
@@ -95,16 +101,16 @@ public class StartScreen extends AnchorPane implements Initializable {
 	String playerName = NameInput.getText();
 	int playerCount = NumPlayerChoice.getValue();
 	boolean useBSides = SidesChooser.isSelected();
-	
+
 	if (NameInput.getText().equals("")) {
 	    NameInput.setText("Please enter name");
 	    NameInput.requestFocus();
 	    return;
 	}
 
-	((Button)event.getSource()).setDisable(true);
+	((Button) event.getSource()).setDisable(true);
 	Program.loadCardImages(playerCount);
-	
+
 	// All is good. Start the game, close this window.
 
 	final ServerConnection conn = new LocalClient(0);
@@ -157,7 +163,7 @@ public class StartScreen extends AnchorPane implements Initializable {
 		}
 	    }
 	}.start();
-	
+
 	parent.close();
     }
 }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import sevenWonders.Program;
 import sevenWonders.backend.GameState;
 import sevenWonders.backend.Hand;
@@ -18,6 +17,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+/**
+ * Mainboard is the Anchorpane in the gui that contains the other gui elements.
+ * It contains a imageview for displaying mouse-over targets from the other
+ * views in a larger size. It contains parser methods for the gui elements it
+ * incorpates, PlayerBoard, WonderHandController and VictoryScreenController.
+ * 
+ * @author Jenny Norelius & Andreas Jönsson
+ */
 public class MainBoard extends AnchorPane implements Initializable {
 
     @FXML

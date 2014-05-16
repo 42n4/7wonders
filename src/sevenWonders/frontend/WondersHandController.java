@@ -35,8 +35,12 @@ import sevenWonders.Program;
 
 /**
  * Together with WondersHanf.fxml describes and processes the logic for the
- * displaypane for the hand you receive each turn in Seven Wonders. The
- * doneButton will onAction return the action choice of the player.
+ * displaypane for the hand you receive each turn in Seven Wonders. It features
+ * drop down menus for selecting the card, action and paymentoption. The first
+ * available paymentoption will be choosen when you pick a card, and the
+ * choiceboxes default to the first choice when launched. It also shows all the
+ * cards in imageviews. The doneButton will onAction return the action choice of
+ * the player.
  * 
  * @author Jenny Norelius & Andreas Jönsson
  */
@@ -71,25 +75,27 @@ public class WondersHandController extends AnchorPane implements Initializable {
     private ListView paymentList; // listview of available paymentoptions
     @FXML
     private Button doneButton; // returns the selected action
-    
+
     private Hand hand;
     private final ImageView hoverTarget;
     private boolean isSent = false;
-    
-    public WondersHandController(ServerConnection conn, Hand hand, ImageView hoverTarget) {
+
+    public WondersHandController(ServerConnection conn, Hand hand,
+	    ImageView hoverTarget) {
 	this.conn = conn;
 	this.hand = hand;
 	this.hoverTarget = hoverTarget;
-	
-        FXMLLoader loader = new FXMLLoader(sevenWonders.Program.getURL("WondersHand.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
 
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+	FXMLLoader loader = new FXMLLoader(
+		sevenWonders.Program.getURL("WondersHand.fxml"));
+	loader.setRoot(this);
+	loader.setController(this);
+
+	try {
+	    loader.load();
+	} catch (IOException e) {
+	    throw new RuntimeException(e);
+	}
     }
 
     @Override
@@ -105,20 +111,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	Card[] cardArray = handCardSet.toArray(new Card[handCardSet.size()]);
 	String[] handCardNames = new String[cardArray.length];
 
-	//Mouseover event handlers - same as in PlayerBoard
+	// Mouseover event handlers - same as in PlayerBoard
 	EventHandler<MouseEvent> mouseIn = new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-        	ImageView target = (ImageView)e.getSource();
-        	hoverTarget.setImage(target.getImage());
-        	hoverTarget.setVisible(true);
-            }
-        };
+	    @Override
+	    public void handle(MouseEvent e) {
+		ImageView target = (ImageView) e.getSource();
+		hoverTarget.setImage(target.getImage());
+		hoverTarget.setVisible(true);
+	    }
+	};
 	EventHandler<MouseEvent> mouseOut = new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-            	hoverTarget.setVisible(false);
-            }
-        };
-	
+	    @Override
+	    public void handle(MouseEvent e) {
+		hoverTarget.setVisible(false);
+	    }
+	};
+
 	// Fills the image views and the card choice box.
 	for (int i = 0; i < handCardNames.length; i++) {
 	    Image img = Program.getImageFromFilename(cardArray[i].description);
@@ -126,7 +134,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	    cardView.setImage(img);
 	    cardBox.getItems().add(cardArray[i]);
 	    cardView.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseIn);
-            cardView.addEventHandler(MouseEvent.MOUSE_EXITED, mouseOut);
+	    cardView.addEventHandler(MouseEvent.MOUSE_EXITED, mouseOut);
 	}
 
 	// Sets custom cell for paymentList.
@@ -151,8 +159,9 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	doneButton.setOnAction(new EventHandler<ActionEvent>() {
 	    @Override
 	    public void handle(ActionEvent arg0) {
-		if (!isSent && (actionBox.getValue().equals(SELL)
-			|| buildBox.getValue() != null)) {
+		if (!isSent
+			&& (actionBox.getValue().equals(SELL) || buildBox
+				.getValue() != null)) {
 
 		    ActionType actionType = null;
 		    if (actionBox.getValue().equals(BUILD)) {
@@ -162,20 +171,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 		    } else if (actionBox.getValue().equals(SELL)) {
 			actionType = ActionType.DISCARD_CARD;
 		    }
-		    Action action = new Action(cardBox.getValue(), actionType, buildBox.getItems().indexOf(buildBox.getValue()));
+		    Action action = new Action(cardBox.getValue(), actionType,
+			    buildBox.getItems().indexOf(buildBox.getValue()));
 		    isSent = true;
 		    conn.SendAction(action);
 		}
 	    }
 	});
-	
+
 	// Automatically chooses the first options, for lazyness
 	cardBox.setValue(cardArray[0]);
 	actionBox.setValue(BUILD);
     }
 
     /**
-     * Sets a custom StringConverter of PaymentOption for the choicebox buildBox.
+     * Sets a custom StringConverter of PaymentOption for the choicebox
+     * buildBox.
      */
     private void setPaymentBoxConverter() {
 	buildBox.setConverter(new StringConverter<PaymentOption>() {
@@ -188,7 +199,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 	    @Override
 	    public String toString(PaymentOption o) {
 		if (o instanceof PaymentString) {
-		    return ((PaymentString)o).s;
+		    return ((PaymentString) o).s;
 		}
 		if (o.free) {
 		    return "Free build";
@@ -204,14 +215,16 @@ public class WondersHandController extends AnchorPane implements Initializable {
 
     private static class PaymentString extends PaymentOption {
 	String s;
+
 	PaymentString(String s) {
 	    super(0, 0, 0, null, null);
 	    this.s = s;
 	}
     }
+
     /**
-     * Sets a custom cell with a custom StringConverter of PaymentOptions for the 
-     * listView paymentList.
+     * Sets a custom cell with a custom StringConverter of PaymentOptions for
+     * the listView paymentList.
      */
     private void setPaymentCellFactory() {
 	paymentList
@@ -231,7 +244,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			    @Override
 			    public String toString(PaymentOption o) {
 				if (o instanceof PaymentString) {
-				    return ((PaymentString)o).s;
+				    return ((PaymentString) o).s;
 				}
 				if (o.free) {
 				    return "Free build!";
@@ -285,8 +298,10 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			    Object newSelected) {
 			int index = Integer.parseInt(newSelected.toString());
 			if (actionBox.getValue() == null) {
-			    buildBox.getItems().setAll(new ArrayList<PaymentOption>());
-			    paymentList.getItems().setAll(new ArrayList<PaymentOption>());
+			    buildBox.getItems().setAll(
+				    new ArrayList<PaymentOption>());
+			    paymentList.getItems().setAll(
+				    new ArrayList<PaymentOption>());
 			    return;
 			}
 			if (actionBox.getValue().equals(BUILD)) {
@@ -296,18 +311,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			    buildBox.getItems().setAll(list);
 			    paymentList.getItems().setAll(list);
 			    if (list.size() == 0) {
-				paymentList.getItems().addAll(new PaymentString("Can not build"));
+				paymentList.getItems().addAll(
+					new PaymentString("Can not build"));
 			    }
 			} else if (actionBox.getValue().equals(WONDER)) {
 			    buildBox.setValue(null);
 			    buildBox.getItems().setAll(wonderOptions);
 			    paymentList.getItems().setAll(wonderOptions);
 			    if (wonderOptions.size() == 0) {
-				paymentList.getItems().addAll(new PaymentString("Can not build"));
+				paymentList.getItems().addAll(
+					new PaymentString("Can not build"));
 			    }
 			} else if (actionBox.getValue().equals(SELL)) {
-			    paymentList.getItems().setAll(new PaymentString("Sell for 3g."));
-			    buildBox.getItems().setAll(new PaymentString("Sell"));
+			    paymentList.getItems().setAll(
+				    new PaymentString("Sell for 3g."));
+			    buildBox.getItems().setAll(
+				    new PaymentString("Sell"));
 			}
 			if (buildBox.getItems().size() != 0)
 			    buildBox.setValue(buildBox.getItems().get(0));
@@ -341,18 +360,22 @@ public class WondersHandController extends AnchorPane implements Initializable {
 				buildBox.getItems().setAll(list);
 				paymentList.getItems().setAll(list);
 				if (list.size() == 0) {
-				    paymentList.getItems().addAll(new PaymentString("Can not build"));
+				    paymentList.getItems().addAll(
+					    new PaymentString("Can not build"));
 				}
 			    } else if (index == 1) { // WONDER
 				buildBox.getItems().setAll(wonderOptions);
 				paymentList.getItems().setAll(wonderOptions);
 				if (wonderOptions.size() == 0) {
-				    paymentList.getItems().addAll(new PaymentString("Can not build"));
+				    paymentList.getItems().addAll(
+					    new PaymentString("Can not build"));
 				}
 			    } else if (index == 2) { // SELL
-				paymentList.getItems().setAll(new PaymentString("Sell for 3g."));
-				buildBox.getItems().setAll(new PaymentString("Sell"));
-				//setAction(-1);
+				paymentList.getItems().setAll(
+					new PaymentString("Sell for 3g."));
+				buildBox.getItems().setAll(
+					new PaymentString("Sell"));
+				// setAction(-1);
 			    }
 			    if (buildBox.getItems().size() != 0)
 				buildBox.setValue(buildBox.getItems().get(0));
@@ -374,7 +397,7 @@ public class WondersHandController extends AnchorPane implements Initializable {
 			int index = Integer.parseInt(newSelected.toString());
 			if (!actionBox.getValue().isEmpty()
 				&& buildBox.getValue() != null) {
-			    //setAction(index);
+			    // setAction(index);
 			}
 		    }
 		});

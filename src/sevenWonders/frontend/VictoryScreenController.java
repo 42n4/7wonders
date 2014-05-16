@@ -18,18 +18,20 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 /**
- * Displays the final results of the game.
+ * Displays the final results of the game. it takes a list of points generated
+ * by the PointCalculator, a list of players and an index for the local player.
  * 
  * @author Jenny Norelius & Andreas Jönsson
  */
-public class VictoryScreenController extends AnchorPane implements Initializable {
+public class VictoryScreenController extends AnchorPane implements
+	Initializable {
     private final String WIN = "Victory!";
     private final String LOSE = "You Lose!";
     private final String DRAW = "It's a draw!";
     private final String YOU = "You!";
-    private  List<List<Integer>> points;
-    private  List<Player> players;
-    private  int playerIndex;
+    private List<List<Integer>> points;
+    private List<Player> players;
+    private int playerIndex;
     private final List<String> identifier;
 
     @FXML
