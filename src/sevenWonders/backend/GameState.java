@@ -2,6 +2,11 @@ package sevenWonders.backend;
 
 import java.util.List;
 
+/**
+ * Represents the current state of the game.
+ * 
+ * @author Jenny Norelius
+ */
 public class GameState {
     public final List<Player> players;
     public final int currentEra;
