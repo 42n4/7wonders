@@ -3,9 +3,10 @@ package sevenWonders.backend;
 import java.util.Map;
 
 /**
- * This class represents a Wonder in the game. It haas a name, cost, production
- * resource, stages and currently built level. It an enum of five diffrent
- * StageTypes that describes if any action happens when you build the wonder.
+ * This class represents a Wonder in the game. It has a name, cost, production
+ * resource, stages and currently built level. Stages are represented buy an
+ * enum, there's five diffrent StageTypes that describes if any action happens
+ * when you build the wonder.
  * 
  * @author Jenny Norelius & Andreas Jönsson
  */
@@ -14,6 +15,7 @@ public class Wonder {
     public final Map<Resource, Integer>[] cost;
     public final Resource produce;
     public final Stage[] stages;
+    public final boolean isBside;
     private int currentLevel = -1;
 
     /**
@@ -24,11 +26,12 @@ public class Wonder {
      * @param produce
      */
     public Wonder(String name, Map<Resource, Integer>[] cost, Resource produce,
-	    Stage[] stages) {
+	    Stage[] stages, boolean isBside) {
 	this.name = name;
 	this.cost = cost;
 	this.produce = produce;
 	this.stages = stages;
+	this.isBside = isBside;
     }
 
     public int getCurrentLevel() {
