@@ -435,7 +435,7 @@ public class Deck {
 	deck.add(Card.newBuildingRewardCard()
 		.name("Tavern")
 		.id(43)
-		.description("era2 - 26.png")
+		.description("era1 - 26.png")
 		.moneyReward(5)
 		.build());
 	deck.add(Card.newRedCard()
